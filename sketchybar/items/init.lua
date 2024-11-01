@@ -1,0 +1,5 @@
+require("items.apple")
+require("items.calendar")
+require("items.battery")
+require("items.weather")
+require("items.media")
