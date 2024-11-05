@@ -15,7 +15,7 @@ local weather = sbar.add("item", "widgets.weather", {
         icon = "􀖇",
     },
     label = { font = { family = settings.font.numbers } },
-    update_freq = 60, -- Update every 10 minutes
+    update_freq = 300, -- Update every 10 minutes
     popup = { align = "center" }
 })
 
@@ -23,6 +23,8 @@ local weather = sbar.add("item", "widgets.weather", {
 local function update_weather()
     sbar.exec("/usr/local/bin/whereami", function(output)
         local lat, lon = output:match("Latitude: (-?%d+%.%d+).*Longitude: (-?%d+%.%d+)")
+        lat = lat or 33.44
+        lon = lon or -94.04
         -- Cap to 2 decimal places
         lat = tonumber(string.format("%.2f", lat))
         lon = tonumber(string.format("%.2f", lon))

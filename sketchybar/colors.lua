@@ -3,6 +3,7 @@ return {
 	white = 0xffe0def4,          -- Text
 	red = 0xffeb6f92,            -- Love
 	green = 0xff9ccfd8,          -- Foam
+    actually_green = 0xffa2d89c, -- Mint
 	blue = 0xff3e8fb0,           -- Pine
 	yellow = 0xfff6c177,         -- Gold
 	orange = 0xffea9a97,         -- Rose
@@ -15,7 +16,7 @@ return {
 	dark_grey = 0xff2a283e,      -- Highlight Low
 	transparent = 0x00000000,    -- Transparent
 	bar = {
-		bg = 0xf8222136,         -- Base with alpha
+		bg = 0xf8400f32,         -- Base with alpha
 		border = 0xff2a273f,     -- Surface
 	},
 	popup = {
