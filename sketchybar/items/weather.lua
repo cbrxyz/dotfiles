@@ -126,7 +126,7 @@ end)
 
 -- Add padding and styling
 sbar.add("bracket", "widgets.weather.bracket", { weather.name }, {
-    background = { color = colors.bg1 }
+    background = { color = colors.bg2 }
 })
 
 sbar.add("item", "widgets.weather.padding", {

@@ -112,10 +112,13 @@ static inline void network_update(struct network* net) {
 
     // Check for the specified interface name
     if (strcmp(ifa->ifa_name, net->ifname) == 0) {
-      printf("Found network interface: %s\n", net->name);
 
       // Store the IP address
       struct sockaddr_in *addr = (struct sockaddr_in *)ifa->ifa_addr;
+        char buffer[INET_ADDRSTRLEN];
+
+        inet_ntop(AF_INET, &(addr->sin_addr), buffer, sizeof(buffer));
+        printf("address: '%s'\n", buffer);
       net->ip = addr->sin_addr;
       break;
     }
