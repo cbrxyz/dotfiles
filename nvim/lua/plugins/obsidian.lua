@@ -70,8 +70,9 @@ return {
             ["<cr>"] = {
                 action = function()
                     -- follow link if possible
-                    if require("obsidian").util.cursor_on_markdown_link(nil, nil, true) then
-                        return "<cmd>ObsidianFollowLink<CR>"
+                    local obsidian = require("obsidian")
+                    if obsidian.util.cursor_on_markdown_link(nil, nil, true) then
+                        require("obsidian.commands.follow_link")(obsidian.get_client(), {})
                     end
 
                     -- toggle task if possible
@@ -93,7 +94,7 @@ return {
                         -- end
                     else
                         for i, check_char in require("obsidian.itertools").enumerate(checkboxes) do
-                            if string.match(line, "^%s*- %[" .. require("obsidian").util.escape_magic_characters(check_char) .. "%].*") then
+                            if string.match(line, "^%s*- %[" .. obsidian.util.escape_magic_characters(check_char) .. "%].*") then
                                 if i == #checkboxes then
                                     i = 0
                                 end
