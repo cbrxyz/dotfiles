@@ -17,7 +17,7 @@ local toggle_windows = sbar.add("item", {
 	label = { width = 0, y_offset = 0.5, padding_right = 15 },
 	background = {
 		color = colors.with_alpha(colors.bg, 0),
-		border_color = colors.fg_highlight,
+		border_color = colors.bg,
 	},
 	padding_right = 0,
 })
@@ -125,13 +125,13 @@ for workspace_index = 1, max_workspaces do
 		icon = {
 			font = { family = settings.font.numbers },
 			string = aerospace_name(workspace_index),
-			padding_left = 15,
-			padding_right = 8,
+			padding_left = 10,
+			padding_right = 4,
             color = colors.purple,
             highlight_color = colors.fg,
 		},
 		label = {
-			padding_right = 20,
+			padding_right = 15,
 			color = colors.purple,
 			highlight_color = colors.fg,
 			font = "sketchybar-app-font:Regular:16.0",
@@ -141,7 +141,7 @@ for workspace_index = 1, max_workspaces do
 		padding_left = 4,
 		background = {
             color = colors.dirty_white,
-			border_color = colors.fg_highlight,
+			border_color = colors.bg2,
 		},
 	})
 

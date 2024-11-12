@@ -41,9 +41,9 @@ for k, v in pairs(theme) do
 end
 
 if is_dark_mode then
-	colors.fg = theme.gray
+	colors.fg = theme.bg2
 	colors.fg_highlight = theme.purple
-	colors.fg_secondary = theme.gray
+	colors.fg_secondary = theme.bg2
 	colors.bg = theme.pink
 	colors.border = theme.purple
 	colors.active = theme.white
