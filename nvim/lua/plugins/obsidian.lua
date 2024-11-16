@@ -25,6 +25,18 @@ return {
         daily_notes = {
             folder = "dailies",
             date_format = "%Y-%m-%d",
+            template = "templates/daily.md"
+        },
+        templates = {
+            folder = "templates",
+            substitutions = {
+                yesterday = function()
+                    return os.date("%Y-%m-%d", os.time() - 86400)
+                end,
+                tomorrow = function()
+                    return os.date("%Y-%m-%d", os.time() + 86400)
+                end,
+            }
         },
         log_level = vim.log.levels.ERROR,
         ui = {
@@ -73,6 +85,7 @@ return {
                     local obsidian = require("obsidian")
                     if obsidian.util.cursor_on_markdown_link(nil, nil, true) then
                         require("obsidian.commands.follow_link")(obsidian.get_client(), {})
+                        return
                     end
 
                     -- toggle task if possible
@@ -118,7 +131,7 @@ return {
         -- keymaps
         -- Normal mode key mappings
         vim.api.nvim_set_keymap('n', 'ot', ':ObsidianToday<CR>', { noremap = true, silent = true })
-        vim.api.nvim_set_keymap('n', 'om', ':ObsidianTomorrow<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('n', 'om', ':ObsidianToday 1<CR>', { noremap = true, silent = true })
 
         -- Function to execute :ObsidianToday with a given number
         local function obsidian_today_with_number(number)
