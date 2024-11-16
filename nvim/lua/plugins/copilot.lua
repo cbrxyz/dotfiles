@@ -16,6 +16,8 @@ return {
     "github/copilot.vim",
     config = function()
         vim.api.nvim_set_keymap('i', 'jh', 'copilot#Accept("<CR>")', { expr = true, silent = true })
+        -- Set g:copilot_proxy
+        vim.g.copilot_proxy = "http://localhost:8999"
     end,
     -- Conditionally load copilot based on security factors
     cond = function()
