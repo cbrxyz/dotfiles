@@ -186,7 +186,10 @@ return {
                         extra_args = { "--config", vim.fn.expand("~/.config/ruff.toml") }
                     }),
                     -- null_ls.builtins.diagnostics.pylint,
-                }
+                },
+                on_attach = function(client, bufnr)
+                    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
+                end
             })
             vim.keymap.set('n', '<space>p', '<cmd>lua null_ls.toggle({})<CR>')
 
