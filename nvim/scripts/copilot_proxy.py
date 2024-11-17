@@ -9,3 +9,7 @@ def request(flow: http.HTTPFlow) -> None:
     # If the "nwo" JSON field in the request was "cbrxyz/vault" then return 418
     if "nwo" in flow.request.text and "cbrxyz/vault" in flow.request.text:
             flow.response = http.Response.make(418, b"no vault for you")
+
+    # Disallow for 1password notes
+    if "prompt" in flow.request.text and "Path: 1P: " in flow.request.text:
+            flow.response = http.Response.make(418, b"no 1pass notes for you")
