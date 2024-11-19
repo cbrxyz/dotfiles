@@ -206,5 +206,7 @@ return {
   ["Thunderbird"] = ":thunderbird:",
   ["Firefox"] = ":firefox:",
   ["WezTerm"] = ":wezterm:",
+  ["ChatGPT"] = ":openai:",
+  ["E-book Viewer"] = ":book:",
   ["default"] = ":default:",
 }
