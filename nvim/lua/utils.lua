@@ -5,4 +5,6 @@ M.git_root = function()
 	return vim.fn.fnamemodify(git_path, ":h")
 end
 
+
+
 return M

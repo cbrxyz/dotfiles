@@ -7,8 +7,8 @@ return {
             -- calling `setup` is optional for customization
             require("fzf-lua").setup({
                 winopts = {
-                    height = 0.4,
-                    width = 0.4,
+                    height = 0.75,
+                    width = 0.75,
                     row = 0.5,
                     hl = { normal = "Pmenu" },
                     border = "none",
