@@ -9,6 +9,9 @@ return {
     --   "BufReadPre path/to/my-vault/*.md",
     --   "BufNewFile path/to/my-vault/*.md",
     -- },
+    cond = function()
+        return vim.fn.has('macunix') == 1
+    end,
     dependencies = {
         -- Required.
         "nvim-lua/plenary.nvim",
