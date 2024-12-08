@@ -172,6 +172,7 @@ return {
                         extra_args = { "-L", "selectin" }
                     }),
                     null_ls.builtins.diagnostics.cpplint,
+                    null_ls.builtins.diagnostics.eslint,
                     null_ls.builtins.diagnostics.yamllint,
                     null_ls.builtins.diagnostics.shellcheck,
                     null_ls.builtins.diagnostics.ruff.with({
