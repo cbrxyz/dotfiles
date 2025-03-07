@@ -53,6 +53,9 @@ return {
             -- <leader>zE to search through diagnostics (all)
             vim.api.nvim_set_keymap("n", "<leader>zE", "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics()<cr>",
                 { noremap = true, silent = true })
+            -- <leader>zc to search through config files
+            vim.api.nvim_set_keymap("n", "<leader>zc", "<cmd>lua require('fzf-lua').files({cwd = \"~/.config\"})<cr>",
+                { noremap = true, silent = true })
         end
     },
 }
