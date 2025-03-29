@@ -164,36 +164,6 @@ return {
             }
 
             require 'lspconfig'.ltex.setup {}
-
-            null_ls = require('null-ls')
-            null_ls.setup({
-                sources = {
-                    null_ls.builtins.diagnostics.codespell.with({
-                        extra_args = { "-L", "selectin" }
-                    }),
-                    null_ls.builtins.diagnostics.cpplint,
-                    null_ls.builtins.diagnostics.eslint,
-                    null_ls.builtins.diagnostics.yamllint,
-                    null_ls.builtins.diagnostics.shellcheck,
-                    null_ls.builtins.diagnostics.ruff.with({
-                        extra_args = { "--config", vim.fn.expand("~/.config/ruff.toml") }
-                    }),
-                    null_ls.builtins.formatting.black,
-                    null_ls.builtins.formatting.latexindent,
-                    null_ls.builtins.formatting.prettier,
-                    null_ls.builtins.formatting.clang_format,
-                    null_ls.builtins.formatting.shfmt,
-                    null_ls.builtins.formatting.ruff.with({
-                        extra_args = { "--config", vim.fn.expand("~/.config/ruff.toml") }
-                    }),
-                    -- null_ls.builtins.diagnostics.pylint,
-                },
-                on_attach = function(client, bufnr)
-                    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
-                end
-            })
-            vim.keymap.set('n', '<space>p', '<cmd>lua null_ls.toggle({})<CR>')
-
             -- Use a loop to conveniently call 'setup' on multiple servers and
             -- map buffer local keybindings when the language server attaches
             local servers = { 'pyright', 'ts_ls', 'yamlls', 'lua_ls', 'jsonls', 'ltex' }
@@ -235,6 +205,7 @@ return {
                 }),
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
                     { name = 'path' },
                     { name = 'omni' },
                 }, {
@@ -281,10 +252,41 @@ return {
         "folke/lsp-colors.nvim",
     },
     {
-        "jose-elias-alvarez/null-ls.nvim",
+        "nvimtools/none-ls.nvim",
         dependencies = {
-            "nvim-lua/plenary.nvim"
-        }
+            "nvim-lua/plenary.nvim",
+            "nvimtools/none-ls-extras.nvim"
+        },
+        config = function()
+            none_ls = require('null-ls')
+            none_ls.setup({
+                sources = {
+                    none_ls.builtins.diagnostics.codespell.with({
+                        extra_args = { "-L", "selectin" }
+                    }),
+                    none_ls.builtins.diagnostics.cpplint,
+                    none_ls.builtins.diagnostics.eslint,
+                    none_ls.builtins.diagnostics.yamllint,
+                    none_ls.builtins.diagnostics.shellcheck,
+                    require("none-ls.diagnostics.ruff").with({
+                        extra_args = { "--config", vim.fn.expand("~/.config/ruff.toml") }
+                    }),
+                    none_ls.builtins.formatting.black,
+                    none_ls.builtins.formatting.latexindent,
+                    none_ls.builtins.formatting.prettier,
+                    none_ls.builtins.formatting.clang_format,
+                    none_ls.builtins.formatting.shfmt,
+                    require("none-ls.formatting.ruff").with({
+                        extra_args = { "--config", vim.fn.expand("~/.config/ruff.toml") }
+                    }),
+                    -- none_ls.builtins.diagnostics.pylint,
+                },
+                on_attach = function(client, bufnr)
+                    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
+                end
+            })
+            vim.keymap.set('n', '<space>p', '<cmd>lua none_ls.toggle({})<CR>')
+        end
     },
     {
         "folke/lazydev.nvim",
