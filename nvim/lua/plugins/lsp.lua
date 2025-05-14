@@ -66,59 +66,13 @@ return {
                 -- Add support for LSP Status
                 lsp_status.on_attach(client)
             end
-
-            -- Add completion menu formatting
-            local cmp_kinds = {
-                Text = "",
-                Method = "",
-                Function = "",
-                Constructor = "",
-                Field = "ﰠ",
-                Variable = "",
-                Class = "ﴯ",
-                Interface = "",
-                Module = "",
-                Property = "ﰠ",
-                Unit = "塞",
-                Value = "",
-                Enum = "",
-                Keyword = "",
-                Snippet = "",
-                Color = "",
-                File = "",
-                Reference = "",
-                Folder = "",
-                EnumMember = "",
-                Constant = "",
-                Struct = "פּ",
-                Event = "",
-                Operator = "",
-                TypeParameter = ""
-            }
-
-            -- Setup ccls
-            -- configs.ccls = {
-            --     default_config = {
-            --         cmd = { "ccls" },
-            --         filetypes = { "c", "cpp", "objc", "objcpp" },
-            --         root_dir = function(fname)
-            --             return util.root_pattern("compile_commands.json", "compile_flags.txt", ".git")(fname) or
-            --                 util.path.dirname(fname)
-            --         end,
-            --     },
-            -- }
-
-            -- nvim_lsp.ccls.setup {
-            --     init_options = {
-            --         compilationDatabaseDirectory = "build",
-            --         index = {
-            --             threads = 0,
-            --         },
-            --         clang = {
-            --             excludeArgs = { "-frounding-math" },
-            --         }
-            --     }
-            -- }
+ 
+            nvim_lsp.clangd.setup({
+              cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+              init_options = {
+                fallbackFlags = { '-std=c++17' },
+              },
+            })
 
             nvim_lsp.csharp_ls.setup {}
 
@@ -166,7 +120,7 @@ return {
             require 'lspconfig'.ltex.setup {}
             -- Use a loop to conveniently call 'setup' on multiple servers and
             -- map buffer local keybindings when the language server attaches
-            local servers = { 'pyright', 'ts_ls', 'yamlls', 'lua_ls', 'jsonls', 'ltex' }
+            local servers = { 'pyright', 'ts_ls', 'yamlls', 'lua_ls', 'jsonls', 'ltex', 'clangd' }
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             for _, lsp in ipairs(servers) do
@@ -178,68 +132,6 @@ return {
                     capabilities = capabilities
                 }
             end
-
-            -- Setup nvim-cmp.
-            local cmp = require 'cmp'
-
-            cmp.setup({
-                completion = {
-                    completeopt = 'menu,menuone,noselect',
-                },
-                snippet = {
-                    -- REQUIRED - you must specify a snippet engine
-                    expand = function(args)
-                        require('luasnip').lsp_expand(args.body)
-                    end,
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-                    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-                    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-                    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-                    ['<C-e>'] = cmp.mapping({
-                        i = cmp.mapping.abort(),
-                        c = cmp.mapping.close(),
-                    }),
-                    ['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                }),
-                sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'path' },
-                    { name = 'omni' },
-                }, {
-                    { name = 'buffer' },
-                }),
-                -- formatting = {
-                --   format = function(entry, vim_item)
-                --     vim_item.kind = ((cmp_kinds[vim_item.kind] .. " ") or '') .. vim_item.kind
-                --       vim_item.menu = ({
-                --         omni = (vim.inspect(vim_item.menu):gsub('%"', "")),
-                --         buffer = "[Buffer]",
-                --       })[entry.source.name]
-                --     return vim_item
-                --   end,
-                -- },
-            })
-
-            -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-            cmp.setup.cmdline('/', {
-                sources = {
-                    { name = 'buffer' }
-                }
-            })
-
-            -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-            cmp.setup.cmdline(':', {
-                sources = cmp.config.sources({
-                    { name = 'path' }
-                }, {
-                    { name = 'cmdline' }
-                })
-            })
-
-            vim.o.completeopt = "menu,menuone,noselect"
         end,
     },
     {
@@ -261,13 +153,17 @@ return {
             none_ls = require('null-ls')
             none_ls.setup({
                 sources = {
+                    none_ls.builtins.code_actions.proselint,
+                    none_ls.builtins.diagnostics.actionlint,
                     none_ls.builtins.diagnostics.codespell.with({
                         extra_args = { "-L", "selectin" }
                     }),
+                    none_ls.builtins.diagnostics.cmake_lint,
                     none_ls.builtins.diagnostics.cpplint,
                     none_ls.builtins.diagnostics.eslint,
-                    none_ls.builtins.diagnostics.yamllint,
+                    -- none_ls.builtins.diagnostics.proselint,
                     none_ls.builtins.diagnostics.shellcheck,
+                    none_ls.builtins.diagnostics.yamllint,
                     require("none-ls.diagnostics.ruff").with({
                         extra_args = { "--config", vim.fn.expand("~/.config/ruff.toml") }
                     }),
