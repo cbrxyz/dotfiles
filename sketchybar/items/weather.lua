@@ -28,8 +28,7 @@ local function update_weather()
         -- Cap to 2 decimal places
         lat = tonumber(string.format("%.2f", lat))
         lon = tonumber(string.format("%.2f", lon))
-        local url = "http://api.openweathermap.org/data/2.5/weather?lat=" .. lat .. "&lon=" .. lon .. "&units=imperial&appid=eb7eddeae1c04c8ac65079e7c45ffe2a"
-        -- local url = "https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&appid=eb7eddeae1c04c8ac65079e7c45ffe2a"
+        local url = "http://api.openweathermap.org/data/2.5/weather?lat=" .. lat .. "&lon=" .. lon .. "&units=imperial&appid=$OPENWEATHERMAP_API_KEY"
         local req = http_request.new_from_uri(url)
         local headers, stream = req:go()
 

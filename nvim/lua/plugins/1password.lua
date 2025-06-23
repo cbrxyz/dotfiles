@@ -1,4 +1,4 @@
 return {
-    "mrjones2014/op.nvim",
-    build = "make install",
+	"mrjones2014/op.nvim",
+	build = "make install",
 }
