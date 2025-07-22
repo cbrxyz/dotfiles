@@ -16,6 +16,7 @@ return {
 			local prohibited = {
 				"~/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault",
 				"~/resume",
+				"~/homelab",
 			}
 			for _, dir in ipairs(prohibited) do
 				if cwd:find(vim.fs.normalize(dir)) then
