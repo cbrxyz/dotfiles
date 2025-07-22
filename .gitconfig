@@ -20,10 +20,10 @@
 [merge]
 	conflictstyle = zdiff3
 [diff]
-	colorMoved = plain
-	algorithm = histogram
-	mnemonicPrefix = true
-	renames = true
+    colorMoved = plain
+    algorithm = histogram
+    mnemonicPrefix = true
+    renames = true
 [gpg]
 	program = gpg
 [pull]
@@ -42,7 +42,7 @@
     count-conflicts = !grep -c '^=======$'
     count-all-conflicts = !grep -c '^=======$' $(git conflicts)
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
 [http]
 	postBuffer = 10485760
 [column]
@@ -56,10 +56,23 @@
 	pruneTags = true
 	all = true
 [help]
-	autocorrect = prompt
+	autocorrect = immediate
 [commit]
 	verbose = true
 [rebase]
 	autoSquash = true
 	autoStash = true
-	updateRefs = true
+    updateRefs = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[status]
+	submoduleSummary = 1
