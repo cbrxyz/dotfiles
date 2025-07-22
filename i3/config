@@ -34,6 +34,10 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
+# fastcompmgr is a lightweight compositor for X11 that provides basic
+# compositing features like transparency, shadows, and fading effects.
+exec --no-startup-id -- fastcompmgr -o 0.4 -r 12 -c -C
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -54,8 +58,41 @@ bindsym $mod+Return exec kitty
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# Colors
+# set primary Rosé Pine Moon colorscheme colors
+set $base           #232136
+set $surface        #2a273f
+set $overlay        #393552
+set $muted          #6e6a86
+set $subtle         #908caa
+set $text           #e0def4
+set $love           #eb6f92
+set $gold           #f6c177
+set $rose           #ea9a97
+set $pine           #3e8fb0
+set $foam           #9ccfd8
+set $iris           #c4a7e7
+set $highlightlow   #2a283e
+set $highlightmed   #44415a
+set $highlighthigh  #56526e
+
+# Teming border and Windows --------------
+# target                 title     bg    text           indicator  border
+client.focused           $rose     $base $rose          $base      $base
+client.focused_inactive  $text     $base $text          $subtle    $surface
+client.unfocused         $text     $base $text          $overlay   $overlay
+client.urgent            $text     $base $text          $love      $love
+client.placeholder       $base     $base $text          $overlay   $overlay
+client.background        $base
+
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_run \
+    -fn 'monospace-10' \
+    -nb "$base" \
+    -nf "$text" \
+    -sb "$highlightmed" \
+    -sf "$text"
+
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -149,6 +186,21 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+set $monitor_left "DP-1"
+set $monitor_right "DP-2"
+
+# use certain displays
+workspace $ws1 output $monitor_left
+workspace $ws2 output $monitor_right
+workspace $ws3 output $monitor_left
+workspace $ws4 output $monitor_right
+workspace $ws5 output $monitor_left
+workspace $ws6 output $monitor_right
+workspace $ws7 output $monitor_left
+workspace $ws8 output $monitor_right
+workspace $ws9 output $monitor_left
+workspace $ws10 output $monitor_right
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -186,12 +238,16 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id betterlockscreen -w dim
 bindsym $mod+shift+x exec betterlockscreen -l dim
 
-# exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/bee.jpg
+exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/bee.jpg
 exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
 
 # Floating polybar windows
 for_window [class="Yad" title="yad-calendar"] floating enable
+
+# Floating zoom windows
+for_window [class="zoom"] floating enable
+for_window [title="^zoom$"] floating enable
 
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
@@ -201,3 +257,6 @@ bindsym $mod+Ctrl+less move workspace to output left
 # bindsym Ctrl+$mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 bindcode 191 exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
 bindcode 107 exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+
+# kill window on middle click
+bindsym --release --border button2 kill
