@@ -43,6 +43,13 @@ vim.api.nvim_set_hl(0, "VirtualTextWarning", { link = "YellowSign" })
 vim.api.nvim_set_hl(0, "VirtualTextInfo", { link = "BlueSign" })
 vim.api.nvim_set_hl(0, "VirtualTextHint", { link = "Number" })
 
+-- rbuf file
+vim.filetype.add({
+    extension = {
+        rbuf = "rbuf",
+    }
+})
+
 -- Light mode
 vim.cmd([[
   function! LightMode()

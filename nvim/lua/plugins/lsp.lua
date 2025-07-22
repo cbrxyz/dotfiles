@@ -76,9 +76,9 @@ return {
 			end
 
 			nvim_lsp.clangd.setup({
-				cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose" },
+				cmd = { "clangd", "--background-index", "--clang-tidy" },
 				init_options = {
-					fallbackFlags = { "-std=c++17" },
+					fallbackFlags = { "-std=c++20" },
 				},
 			})
 
