@@ -118,6 +118,7 @@ return {
 				},
 			})
 
+            -- Python language server
 			nvim_lsp.pyright.setup({
 				single_file_support = false,
 				root_dir = function(fname)
@@ -125,10 +126,13 @@ return {
 				end,
 			})
 
+            -- Bash language server
+            nvim_lsp.bashls.setup({})
+
 			require("lspconfig").ltex.setup({})
 			-- Use a loop to conveniently call 'setup' on multiple servers and
 			-- map buffer local keybindings when the language server attaches
-			local servers = { "pyright", "ts_ls", "yamlls", "lua_ls", "jsonls", "ltex", "clangd" }
+			local servers = { "pyright", "ts_ls", "yamlls", "lua_ls", "jsonls", "ltex", "clangd", "bashls" }
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			for _, lsp in ipairs(servers) do
@@ -167,16 +171,12 @@ return {
 						extra_args = { "-L", "selectin" },
 					}),
 					none_ls.builtins.diagnostics.cmake_lint,
-					none_ls.builtins.diagnostics.cpplint,
-					none_ls.builtins.diagnostics.eslint,
 					-- none_ls.builtins.diagnostics.proselint,
-					none_ls.builtins.diagnostics.shellcheck,
 					none_ls.builtins.diagnostics.yamllint,
 					require("none-ls.diagnostics.ruff").with({
 						extra_args = { "--config", vim.fn.expand("~/.config/ruff.toml") },
 					}),
 					none_ls.builtins.formatting.black,
-					none_ls.builtins.formatting.latexindent,
 					none_ls.builtins.formatting.prettier,
 					none_ls.builtins.formatting.clang_format,
 					none_ls.builtins.formatting.stylua,
