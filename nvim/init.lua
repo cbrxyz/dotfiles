@@ -103,3 +103,4 @@ vim.o.completeopt = "menu,menuone,noselect"
 -- Plugins
 require("config.lazy")
 require("config.autocorrect")
+require("config.quickfix")
