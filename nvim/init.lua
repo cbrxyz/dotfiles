@@ -45,9 +45,9 @@ vim.api.nvim_set_hl(0, "VirtualTextHint", { link = "Number" })
 
 -- rbuf file
 vim.filetype.add({
-    extension = {
-        rbuf = "rbuf",
-    }
+	extension = {
+		rbuf = "rbuf",
+	},
 })
 
 -- Light mode

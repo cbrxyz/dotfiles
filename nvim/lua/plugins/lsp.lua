@@ -81,11 +81,11 @@ return {
 				init_options = {
 					fallbackFlags = { "-std=c++20" },
 				},
-                on_attach = on_attach,
-                flags = {
-                    debounce_text_changes = 300,
-                },
-                capabilities = capabilities,
+				on_attach = on_attach,
+				flags = {
+					debounce_text_changes = 300,
+				},
+				capabilities = capabilities,
 			})
 
 			nvim_lsp.csharp_ls.setup({})
@@ -100,20 +100,20 @@ return {
 						},
 					},
 				},
-                on_attach = on_attach,
-                flags = {
-                    debounce_text_changes = 300,
-                },
-                capabilities = capabilities,
+				on_attach = on_attach,
+				flags = {
+					debounce_text_changes = 300,
+				},
+				capabilities = capabilities,
 			})
 
 			-- Lua language server
 			nvim_lsp.lua_ls.setup({
-                on_attach = on_attach,
-                flags = {
-                    debounce_text_changes = 300,
-                },
-                capabilities = capabilities,
+				on_attach = on_attach,
+				flags = {
+					debounce_text_changes = 300,
+				},
+				capabilities = capabilities,
 				settings = {
 					Lua = {
 						runtime = {
@@ -134,17 +134,17 @@ return {
 				},
 			})
 
-            -- Python language server
+			-- Python language server
 			nvim_lsp.pyright.setup({
 				single_file_support = false,
 				root_dir = function(fname)
 					return util.root_pattern("requirements.txt", "setup.py", ".git")(fname) or util.path.dirname(fname)
 				end,
-                on_attach = on_attach,
-                flags = {
-                    debounce_text_changes = 300,
-                },
-                capabilities = capabilities,
+				on_attach = on_attach,
+				flags = {
+					debounce_text_changes = 300,
+				},
+				capabilities = capabilities,
 			})
 
 			-- Use a loop to conveniently call 'setup' on multiple servers and

@@ -52,26 +52,28 @@ local workspaces = {}
 -- Converts workspace ID to number/letter
 -- returns either 1-9 for 1-9 or A-Z for 10-35
 local function aerospace_name(workspace_id)
-    if workspace_id <= 9 then
-        return tostring(workspace_id)
-    end
-    return string.char(workspace_id + 55)
+	if workspace_id <= 9 then
+		return tostring(workspace_id)
+	end
+	return string.char(workspace_id + 55)
 end
 
 -- Reverse of aerospace_name
 local function aerospace_index(workspace_name)
-    if tonumber(workspace_name) then
-        return tonumber(workspace_name)
-    end
-    return string.byte(workspace_name) - 55
+	if tonumber(workspace_name) then
+		return tonumber(workspace_name)
+	end
+	return string.byte(workspace_name) - 55
 end
 
 -- Updates workspace UI to reflect current window state
 -- Shows window icons when apps are open and hides them when empty,
 -- except for the focused workspace which shows a placeholder
 local function updateWindows(workspace_index)
-	local get_windows =
-		string.format("aerospace list-windows --workspace %s --format '%%{app-name}' --json", aerospace_name(workspace_index))
+	local get_windows = string.format(
+		"aerospace list-windows --workspace %s --format '%%{app-name}' --json",
+		aerospace_name(workspace_index)
+	)
 	sbar.exec(get_windows, function(open_windows)
 		local icon_line = ""
 		local no_app = true
@@ -127,8 +129,8 @@ for workspace_index = 1, max_workspaces do
 			string = aerospace_name(workspace_index),
 			padding_left = 10,
 			padding_right = 4,
-            color = colors.purple,
-            highlight_color = colors.fg,
+			color = colors.purple,
+			highlight_color = colors.fg,
 		},
 		label = {
 			padding_right = 15,
@@ -140,7 +142,7 @@ for workspace_index = 1, max_workspaces do
 		padding_right = 1,
 		padding_left = 4,
 		background = {
-            color = colors.dirty_white,
+			color = colors.dirty_white,
 			border_color = colors.bg2,
 		},
 	})

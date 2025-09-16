@@ -1,1 +1,1 @@
-return 'dark'
+return "dark"

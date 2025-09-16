@@ -6,7 +6,6 @@
 	defaultBranch = main
 [credential]
 	helper = osxkeychain
-	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager
 [core]
     excludesfile = ~/.gitignore
@@ -64,10 +63,8 @@
 	autoStash = true
     updateRefs = true
 [credential "https://github.com"]
-	helper = 
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
 	helper = !/usr/bin/gh auth git-credential
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -76,3 +73,5 @@
 	required = true
 [status]
 	submoduleSummary = 1
+[log]
+	date = local
