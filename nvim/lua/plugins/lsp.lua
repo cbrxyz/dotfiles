@@ -74,12 +74,18 @@ return {
 				-- Add support for LSP Status
 				lsp_status.on_attach(client)
 			end
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			nvim_lsp.clangd.setup({
 				cmd = { "clangd", "--background-index", "--clang-tidy" },
 				init_options = {
 					fallbackFlags = { "-std=c++20" },
 				},
+                on_attach = on_attach,
+                flags = {
+                    debounce_text_changes = 300,
+                },
+                capabilities = capabilities,
 			})
 
 			nvim_lsp.csharp_ls.setup({})
@@ -94,10 +100,20 @@ return {
 						},
 					},
 				},
+                on_attach = on_attach,
+                flags = {
+                    debounce_text_changes = 300,
+                },
+                capabilities = capabilities,
 			})
 
 			-- Lua language server
 			nvim_lsp.lua_ls.setup({
+                on_attach = on_attach,
+                flags = {
+                    debounce_text_changes = 300,
+                },
+                capabilities = capabilities,
 				settings = {
 					Lua = {
 						runtime = {
@@ -124,18 +140,18 @@ return {
 				root_dir = function(fname)
 					return util.root_pattern("requirements.txt", "setup.py", ".git")(fname) or util.path.dirname(fname)
 				end,
+                on_attach = on_attach,
+                flags = {
+                    debounce_text_changes = 300,
+                },
+                capabilities = capabilities,
 			})
 
-            -- Bash language server
-            nvim_lsp.bashls.setup({})
-
-			require("lspconfig").ltex.setup({})
 			-- Use a loop to conveniently call 'setup' on multiple servers and
 			-- map buffer local keybindings when the language server attaches
-			local servers = { "pyright", "ts_ls", "yamlls", "lua_ls", "jsonls", "ltex", "clangd", "bashls" }
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local standard_servers = { "ts_ls", "jsonls", "ltex", "bashls" }
 
-			for _, lsp in ipairs(servers) do
+			for _, lsp in ipairs(standard_servers) do
 				nvim_lsp[lsp].setup({
 					on_attach = on_attach,
 					flags = {
