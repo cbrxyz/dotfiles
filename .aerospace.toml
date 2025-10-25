@@ -80,6 +80,9 @@ outer.right =      3
 A = 'secondary'
 B = 'secondary'
 C = 'secondary'
+D = 'secondary'
+E = 'secondary'
+F = 'secondary'
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

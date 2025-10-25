@@ -227,6 +227,7 @@ return {
 				sources = {
 					none_ls.builtins.code_actions.proselint,
 					none_ls.builtins.diagnostics.actionlint,
+					none_ls.builtins.diagnostics.bean_check,
 					none_ls.builtins.diagnostics.codespell.with({
 						extra_args = { "-L", "selectin" },
 					}),
@@ -236,6 +237,7 @@ return {
 					require("none-ls.diagnostics.ruff").with({
 						extra_args = { "--config", vim.fn.expand("~/.config/ruff.toml") },
 					}),
+					none_ls.builtins.formatting.bean_format,
 					none_ls.builtins.formatting.black,
 					none_ls.builtins.formatting.prettier,
 					none_ls.builtins.formatting.clang_format,
