@@ -31,6 +31,10 @@ return {
 				indicator_ok = "Ok",
 			})
 
+			vim.diagnostic.config({
+				virtual_text = true,
+			})
+
 			-- Use an on_attach function to only map the following keys
 			-- after the language server attaches to the current buffer
 			local on_attach = function(client, bufnr)
@@ -43,6 +47,17 @@ return {
 
 				-- Enable completion triggered by <c-x><c-o>
 				buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+
+				-- Enable inlay hints if supported
+				if client.server_capabilities.inlayHintProvider then
+					vim.lsp.inlay_hint.enable(false)
+					buf_set_keymap(
+						"n",
+						"<leader>lh",
+						"<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",
+						{ noremap = true, silent = true }
+					)
+				end
 
 				-- Mappings.
 				local opts = { noremap = true, silent = true }
@@ -66,10 +81,16 @@ return {
 				buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 				buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 				buf_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-				buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-				buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+				buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.jump({count = -1, float = true})<CR>", opts)
+				buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.jump({count = 1, float = true})<CR>", opts)
 				buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-				buf_set_keymap("n", "<space>ff", "<cmd>lua vim.lsp.buf.format( { async = true } )<CR>", opts)
+				-- also print "formatted!"
+				buf_set_keymap(
+					"n",
+					"<space>ff",
+					"<cmd>lua vim.lsp.buf.format( { async = true } ); print('formatted!')<CR>",
+					opts
+				)
 
 				-- Add support for LSP Status
 				lsp_status.on_attach(client)
@@ -77,8 +98,21 @@ return {
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			nvim_lsp.clangd.setup({
-				cmd = { "clangd", "--background-index", "--clang-tidy" },
+				cmd = {
+					"clangd",
+					"--background-index",
+					"--clang-tidy",
+					"-j=16",
+					"--malloc-trim",
+					"--pch-storage=memory",
+				},
 				init_options = {
+					InlayHints = {
+						Designators = true,
+						Enabled = true,
+						ParameterNames = true,
+						DeducedTypes = true,
+					},
 					fallbackFlags = { "-std=c++20" },
 				},
 				on_attach = on_attach,
@@ -140,6 +174,16 @@ return {
 				root_dir = function(fname)
 					return util.root_pattern("requirements.txt", "setup.py", ".git")(fname) or util.path.dirname(fname)
 				end,
+				on_attach = on_attach,
+				flags = {
+					debounce_text_changes = 300,
+				},
+				capabilities = capabilities,
+			})
+
+			-- Bazel language server
+			nvim_lsp.starpls.setup({
+				cmd = { "starpls", "server", "--experimental_enable_label_completions" },
 				on_attach = on_attach,
 				flags = {
 					debounce_text_changes = 300,
@@ -221,4 +265,12 @@ return {
 		},
 	},
 	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+	{
+		"p00f/clangd_extensions.nvim",
+		ft = "cpp",
+		config = function()
+			-- Set <space>ch to switch header
+			vim.keymap.set("n", "<space>ch", "<cmd>ClangdSwitchSourceHeader<CR>")
+		end,
+	},
 }

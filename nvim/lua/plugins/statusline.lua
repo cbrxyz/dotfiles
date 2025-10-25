@@ -37,12 +37,30 @@ return {
 			return count .. "L/" .. tostring(wc.visual_words) .. "W"
 		end
 
+		local colorscheme = require("rose-pine.palette")
+		local colors = {
+			red = colorscheme.love,
+			yellow = colorscheme.gold,
+			blue = colorscheme.foam,
+			white = colorscheme.text,
+			black = colorscheme.base,
+		}
+
 		require("lualine").setup({
 			sections = {
 				lualine_a = { "mode" },
-				lualine_b = { "branch", "diff", "diagnostics" },
+				lualine_b = { "branch", "diff" },
 				lualine_c = { "filename" },
 				lualine_x = {
+					{
+						"diagnostics",
+						sections = { "error", "warn", "info" },
+						diagnostics_color = {
+							error = { bg = colors.red, fg = colors.white },
+							warn = { bg = colors.yellow, fg = colors.black },
+							info = { bg = colors.info, fg = colors.black },
+						},
+					},
 					{ md_wordcount, cond = is_markdown },
 					{ latex_wordcount, cond = is_latex },
 					"encoding",
