@@ -62,21 +62,26 @@ jobs:
 
   nvim-tests:
     name: Run Neovim tests
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Check out code from GitHub
         uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Copy config
+        run: |
+          cp -r ${{ github.workspace }}/nvim/ ~/.config/nvim/
       - uses: rhysd/action-setup-vim@v1
         with:
           neovim: true
           version: nightly
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Test Neovim startup time
+      - name: Install dependencies and test startup time
         run: |
-          mkdir -p ~/.config/nvim
-          ln -s "$(pwd)"/nvim ~/.config/nvim
-          nvim --startuptime nvim-startup.log --headless -c "qa!"
-          cat nvim-startup.log
+          nvim --headless "+Lazy! sync" +qa
+          nvim --startuptime startuptime.log --headless +qa
+          cat startuptime.log
