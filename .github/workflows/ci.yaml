@@ -94,6 +94,8 @@ jobs:
         with:
           neovim: true
           version: ${{ matrix.nvim_version }}
+      - name: Setup upterm session
+        uses: owenthereal/action-upterm@v1
       - name: Install dependencies
         run: |
           nvim --headless "+Lazy! sync" +qa
@@ -110,3 +112,7 @@ jobs:
           else
             echo "neovim startup time ${TOTAL_TIME_MS}ms is within acceptable limits"
           fi
+      # This healthcheck ensures that there are no overlapping keymaps
+      # - name: which_key healthcheck
+      #   run: |
+      #     nvim --headless -c "
