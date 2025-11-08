@@ -76,5 +76,6 @@ jobs:
         run: |
           mkdir -p ~/.config/nvim
           ln -s "$(pwd)"/nvim ~/.config/nvim
+          ls ~/.config/nvim/lua/plugins
           nvim --startuptime nvim-startup.log --headless -c "qa!"
           cat nvim-startup.log
