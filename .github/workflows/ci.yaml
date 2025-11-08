@@ -70,6 +70,18 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
+        nvim_version:
+          - stable
+          - nightly
+        experimental: [false]
+        # Nightly builds should not fail job
+        include:
+          - os: ubuntu-latest
+            nvim_version: nightly
+            experimental: true
+          - os: macos-latest
+            nvim_version: nightly
+            experimental: true
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out code from GitHub
@@ -82,7 +94,7 @@ jobs:
       - uses: rhysd/action-setup-vim@v1
         with:
           neovim: true
-          version: nightly
+          version: ${{ matrix.nvim_version }}
       - name: Install dependencies
         run: |
           nvim --headless "+Lazy! sync" +qa
