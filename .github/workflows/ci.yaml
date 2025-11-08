@@ -59,3 +59,23 @@ jobs:
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --show-diff-on-failure
+
+  nvim-tests:
+    name: Run Neovim tests
+    needs: pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code from GitHub
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: nightly
+      - name: Test Neovim startup time
+        run: |
+          mkdir -p ~/.config/nvim
+          ln -s "$(pwd)" ~/.config/nvim
+          nvim --startuptime nvim-startup.log --headless -c "qa!"
+          cat nvim-startup.log
