@@ -14,8 +14,6 @@ return {
 			"j-hui/fidget.nvim",
 		},
 		config = function()
-			local nvim_lsp = require("lspconfig")
-
 			local configs = require("lspconfig/configs")
 			local util = require("lspconfig/util")
 
@@ -97,7 +95,7 @@ return {
 			end
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			nvim_lsp.clangd.setup({
+			vim.lsp.config.clangd = {
 				cmd = {
 					"clangd",
 					"--background-index",
@@ -120,12 +118,11 @@ return {
 					debounce_text_changes = 300,
 				},
 				capabilities = capabilities,
-			})
-
-			nvim_lsp.csharp_ls.setup({})
+			}
+            vim.lsp.enable('clangd')
 
 			-- YAML lanaguage server
-			nvim_lsp.yamlls.setup({
+			vim.lsp.config.yamlls = {
 				settings = {
 					yaml = {
 						schemaStore = {
@@ -139,10 +136,11 @@ return {
 					debounce_text_changes = 300,
 				},
 				capabilities = capabilities,
-			})
+			}
+            vim.lsp.enable('yamlls')
 
 			-- Lua language server
-			nvim_lsp.lua_ls.setup({
+			vim.lsp.config.lua_ls = {
 				on_attach = on_attach,
 				flags = {
 					debounce_text_changes = 300,
@@ -166,10 +164,11 @@ return {
 						telemetry = { enable = false },
 					},
 				},
-			})
+			}
+            vim.lsp.enable('lua_ls')
 
 			-- Python language server
-			nvim_lsp.pyright.setup({
+			vim.lsp.config.pyright = {
 				single_file_support = false,
 				root_dir = function(fname)
 					return util.root_pattern("requirements.txt", "setup.py", ".git")(fname) or util.path.dirname(fname)
@@ -179,31 +178,47 @@ return {
 					debounce_text_changes = 300,
 				},
 				capabilities = capabilities,
-			})
+			}
+            vim.lsp.enable('pyright')
 
 			-- Bazel language server
-			nvim_lsp.starpls.setup({
+			vim.lsp.config.starpls = {
 				cmd = { "starpls", "server", "--experimental_enable_label_completions" },
 				on_attach = on_attach,
 				flags = {
 					debounce_text_changes = 300,
 				},
 				capabilities = capabilities,
-			})
+			}
+            vim.lsp.enable('starpls')
+
+            -- Beancount language server
+            -- vim.lsp.config.beancount = {
+            --     on_attach = on_attach,
+            --     flags = {
+            --         debounce_text_changes = 300,
+            --     },
+            --     capabilities = capabilities,
+            --     -- init_options = {
+            --     --     -- current path of buffer
+            --     --     journal_file = "~/cameron.beancount",
+            --     -- }
+            -- }
+            vim.lsp.enable('beancount')
 
 			-- Use a loop to conveniently call 'setup' on multiple servers and
 			-- map buffer local keybindings when the language server attaches
-			local standard_servers = { "ts_ls", "jsonls", "ltex", "bashls" }
+			-- local standard_servers = { "ts_ls", "jsonls", "ltex", "bashls" }
 
-			for _, lsp in ipairs(standard_servers) do
-				nvim_lsp[lsp].setup({
-					on_attach = on_attach,
-					flags = {
-						debounce_text_changes = 300,
-					},
-					capabilities = capabilities,
-				})
-			end
+			-- for _, lsp in ipairs(standard_servers) do
+			-- 	nvim_lsp[lsp].setup({
+			-- 		on_attach = on_attach,
+			-- 		flags = {
+			-- 			debounce_text_changes = 300,
+			-- 		},
+			-- 		capabilities = capabilities,
+			-- 	})
+			-- end
 		end,
 	},
 	{
@@ -229,7 +244,7 @@ return {
 					none_ls.builtins.diagnostics.actionlint,
 					none_ls.builtins.diagnostics.bean_check,
 					none_ls.builtins.diagnostics.codespell.with({
-						extra_args = { "-L", "selectin" },
+						extra_args = { "-L", "selectin,Bilt" },
 					}),
 					none_ls.builtins.diagnostics.cmake_lint,
 					-- none_ls.builtins.diagnostics.proselint,
