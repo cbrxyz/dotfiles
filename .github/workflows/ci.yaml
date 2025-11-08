@@ -72,10 +72,11 @@ jobs:
         with:
           neovim: true
           version: nightly
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Test Neovim startup time
         run: |
           mkdir -p ~/.config/nvim
           ln -s "$(pwd)"/nvim ~/.config/nvim
-          ls ~/.config/nvim/lua/plugins
           nvim --startuptime nvim-startup.log --headless -c "qa!"
           cat nvim-startup.log
