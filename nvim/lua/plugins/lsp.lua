@@ -119,7 +119,7 @@ return {
 				},
 				capabilities = capabilities,
 			}
-            vim.lsp.enable('clangd')
+			vim.lsp.enable("clangd")
 
 			-- YAML lanaguage server
 			vim.lsp.config.yamlls = {
@@ -137,7 +137,7 @@ return {
 				},
 				capabilities = capabilities,
 			}
-            vim.lsp.enable('yamlls')
+			vim.lsp.enable("yamlls")
 
 			-- Lua language server
 			vim.lsp.config.lua_ls = {
@@ -165,7 +165,7 @@ return {
 					},
 				},
 			}
-            vim.lsp.enable('lua_ls')
+			vim.lsp.enable("lua_ls")
 
 			-- Python language server
 			vim.lsp.config.pyright = {
@@ -179,7 +179,7 @@ return {
 				},
 				capabilities = capabilities,
 			}
-            vim.lsp.enable('pyright')
+			vim.lsp.enable("pyright")
 
 			-- Bazel language server
 			vim.lsp.config.starpls = {
@@ -190,21 +190,21 @@ return {
 				},
 				capabilities = capabilities,
 			}
-            vim.lsp.enable('starpls')
+			vim.lsp.enable("starpls")
 
-            -- Beancount language server
-            -- vim.lsp.config.beancount = {
-            --     on_attach = on_attach,
-            --     flags = {
-            --         debounce_text_changes = 300,
-            --     },
-            --     capabilities = capabilities,
-            --     -- init_options = {
-            --     --     -- current path of buffer
-            --     --     journal_file = "~/cameron.beancount",
-            --     -- }
-            -- }
-            vim.lsp.enable('beancount')
+			-- Beancount language server
+			-- vim.lsp.config.beancount = {
+			--     on_attach = on_attach,
+			--     flags = {
+			--         debounce_text_changes = 300,
+			--     },
+			--     capabilities = capabilities,
+			--     -- init_options = {
+			--     --     -- current path of buffer
+			--     --     journal_file = "~/cameron.beancount",
+			--     -- }
+			-- }
+			vim.lsp.enable("beancount")
 
 			-- Use a loop to conveniently call 'setup' on multiple servers and
 			-- map buffer local keybindings when the language server attaches

@@ -5,7 +5,8 @@ return {
 			vim.api.nvim_set_keymap("i", "jh", 'copilot#Accept("<CR>")', { expr = true, silent = true })
 			-- Set g:copilot_proxy
 			if vim.fn.has("macunix") == 1 then
-				vim.g.copilot_proxy = "http://localhost:8999"
+				-- Temporarily disabling
+				-- vim.g.copilot_proxy = "http://localhost:8999"
 			end
 		end,
 		-- Conditionally load copilot based on security factors
@@ -34,15 +35,15 @@ return {
 				end
 			end
 
-            -- Prohibited filetypes
-            local prohibited_filetypes = {
-                "beancount",
-            }
-            for _, filetype in ipairs(prohibited_filetypes) do
-                if vim.bo.filetype == filetype then
-                    return false
-                end
-            end
+			-- Prohibited filetypes
+			local prohibited_filetypes = {
+				"beancount",
+			}
+			for _, filetype in ipairs(prohibited_filetypes) do
+				if vim.bo.filetype == filetype then
+					return false
+				end
+			end
 			return true
 		end,
 	},
