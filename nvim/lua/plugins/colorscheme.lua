@@ -3,8 +3,9 @@ return {
 		"rebelot/kanagawa.nvim",
 		config = function()
 			-- Colorscheme
-			-- vim.cmd('colorscheme kanagawa')
+			vim.cmd("colorscheme kanagawa")
 		end,
+		lazy = true,
 	},
 	{
 		"rose-pine/neovim",

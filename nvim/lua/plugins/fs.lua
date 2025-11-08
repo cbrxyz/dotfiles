@@ -51,6 +51,7 @@ return {
 				require("oil").open_float()
 			end)
 		end,
+		keys = { "<leader>os", "<leader>oo" },
 	},
 	{ "LunarVim/bigfile.nvim" },
 }

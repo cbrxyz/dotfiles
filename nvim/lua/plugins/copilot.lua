@@ -1,6 +1,7 @@
 return {
 	{
 		"github/copilot.vim",
+		event = "InsertEnter",
 		config = function()
 			vim.api.nvim_set_keymap("i", "jh", 'copilot#Accept("<CR>")', { expr = true, silent = true })
 			-- Set g:copilot_proxy

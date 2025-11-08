@@ -16,6 +16,7 @@ return {
 				},
 			})
 		end,
+		cmd = "Octo",
 	},
 	{
 		"linrongbin16/gitlinker.nvim",
