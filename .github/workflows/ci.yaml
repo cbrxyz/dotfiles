@@ -13,6 +13,8 @@ env:
   DEFAULT_PYTHON: 3.12
   # Location of the pre-commit cache. This is set by pre-commit, not us!
   PRE_COMMIT_CACHE: ~/.cache/pre-commit
+  # Maximum acceptable Neovim startup time in milliseconds
+  MAX_NVIM_STARTUP_TIME_MS: 150
 
 # Cancels this run if a new one referring to the same object and same workflow
 # is requested
@@ -85,3 +87,12 @@ jobs:
           nvim --headless "+Lazy! sync" +qa
           nvim --startuptime startuptime.log --headless +qa
           cat startuptime.log
+      - name: Verify startup time is less than ${{ env.MAX_NVIM_STARTUP_TIME_MS }}ms
+        run: |
+          TOTAL_TIME_MS=$(tail -2 startuptime.log | head -1 | awk '{print $1}')
+          if [[ "$TOTAL_TIME_MS" > "${{ env.MAX_NVIM_STARTUP_TIME_MS }}" ]]; then
+            echo "neovim startup time ${TOTAL_TIME_MS}ms exceeds maximum of ${{ env.MAX_NVIM_STARTUP_TIME_MS }}ms"
+            exit 1
+          else
+            echo "neovim startup time ${TOTAL_TIME_MS}ms is within acceptable limits"
+          fi
