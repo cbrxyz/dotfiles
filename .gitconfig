@@ -62,10 +62,6 @@
 	autoSquash = true
 	autoStash = true
     updateRefs = true
-[credential "https://github.com"]
-	helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = !/usr/bin/gh auth git-credential
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -74,4 +70,8 @@
 [status]
 	submoduleSummary = 1
 [log]
-	date = local
+    date = local
+[includeIf "gitdir:/Users"]
+    path = ~/dotfiles/.gitconfig-macos
+[includeIf "gitdir:/home/"]
+    path = ~/dotfiles/.gitconfig-linux
