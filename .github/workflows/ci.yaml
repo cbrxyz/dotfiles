@@ -82,9 +82,11 @@ jobs:
         with:
           neovim: true
           version: nightly
-      - name: Install dependencies and test startup time
+      - name: Install dependencies
         run: |
           nvim --headless "+Lazy! sync" +qa
+      - name: Install dependencies and test startup time
+        run: |
           nvim --startuptime startuptime.log --headless +qa
           cat startuptime.log
       - name: Verify startup time is less than ${{ env.MAX_NVIM_STARTUP_TIME_MS }}ms
