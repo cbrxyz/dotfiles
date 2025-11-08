@@ -75,6 +75,6 @@ jobs:
       - name: Test Neovim startup time
         run: |
           mkdir -p ~/.config/nvim
-          ln -s "$(pwd)" ~/.config/nvim
+          ln -s "$(pwd)"/nvim ~/.config/nvim
           nvim --startuptime nvim-startup.log --headless -c "qa!"
           cat nvim-startup.log
