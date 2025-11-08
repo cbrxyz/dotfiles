@@ -62,7 +62,6 @@ jobs:
 
   nvim-tests:
     name: Run Neovim tests
-    needs: pre-commit
     runs-on: ubuntu-latest
     steps:
       - name: Check out code from GitHub
