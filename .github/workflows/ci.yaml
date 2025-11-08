@@ -72,7 +72,6 @@ jobs:
           - macos-latest
         nvim_version:
           - stable
-          - nightly
         experimental: [false]
         # Nightly builds should not fail job
         include:
