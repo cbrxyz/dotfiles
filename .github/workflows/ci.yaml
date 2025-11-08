@@ -65,6 +65,7 @@ jobs:
   nvim-tests:
     name: Run Neovim tests
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest
@@ -85,7 +86,7 @@ jobs:
       - name: Install dependencies
         run: |
           nvim --headless "+Lazy! sync" +qa
-      - name: Install dependencies and test startup time
+      - name: Test startup time
         run: |
           nvim --startuptime startuptime.log --headless +qa
           cat startuptime.log
