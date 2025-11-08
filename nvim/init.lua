@@ -1,6 +1,9 @@
 -- Enable syntax highlighting
 vim.cmd("syntax on")
 
+-- Enable loader for faster startup
+vim.loader.enable()
+
 -- Basic settings
 vim.o.number = true -- Line numbers
 vim.o.relativenumber = true -- Relative line numbers
