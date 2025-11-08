@@ -94,11 +94,11 @@ jobs:
         with:
           neovim: true
           version: ${{ matrix.nvim_version }}
-      - name: Setup upterm session
-        uses: owenthereal/action-upterm@v1
       - name: Install dependencies
         run: |
-          nvim --headless "+Lazy! sync" +qa
+          # For some reason, on Linux, this command may segfault on the first try -
+          # if so, just run it again (it usually works the second time).
+          nvim --headless "+Lazy! sync" +qa || nvim --headless "+Lazy! sync" +qa
       - name: Test startup time
         run: |
           nvim --startuptime startuptime.log --headless +qa
