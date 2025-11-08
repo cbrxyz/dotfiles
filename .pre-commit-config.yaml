@@ -2,7 +2,8 @@ repos:
   - repo: https://github.com/JohnnyMorganz/StyLua
     rev: v2.2.0
     hooks:
-      - id: stylua # or stylua-system / stylua-github
+      - id: stylua-github
+        args: ["--syntax", "Lua54"]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
