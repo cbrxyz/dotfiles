@@ -3,12 +3,22 @@ return {
 		"lewis6991/gitsigns.nvim",
 		config = function()
 			local gitsigns = require("gitsigns").setup({
-				keymaps = {
-					noremap = true,
+				on_attach = function(bufnr)
+					local gitsigns = require("gitsigns")
+					local function map(mode, l, r, opts)
+						opts = opts or {}
+						opts.buffer = bufnr
+						vim.keymap.set(mode, l, r, opts)
+					end
 
-					["n gn"] = { expr = true, "&diff ? 'gn' : '<cmd>Gitsigns next_hunk<CR>'" },
-					["n gp"] = { expr = true, "&diff ? 'gp' : '<cmd>Gitsigns prev_hunk<CR>'" },
-				},
+					map("n", "gn", function()
+						gitsigns.nav_hunk("next")
+					end)
+
+					map("n", "gp", function()
+						gitsigns.nav_hunk("prev")
+					end)
+				end,
 			})
 		end,
 	},
