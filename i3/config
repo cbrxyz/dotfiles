@@ -186,8 +186,8 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-set $monitor_left "DP-1"
-set $monitor_right "DP-2"
+set $monitor_left "DP-2"
+set $monitor_right "DP-1"
 
 # use certain displays
 workspace $ws1 output $monitor_left
@@ -252,7 +252,7 @@ for_window [title="^zoom$"] floating enable
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
 
-## Screenshots in clipboards
+# Screenshots in clipboards
 # bindsym Ctrl+Print exec --no-startup-id maim --format=png | xclip -selection clipboard -t image/png
 # bindsym Ctrl+$mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 bindcode 191 exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
@@ -260,3 +260,22 @@ bindcode 107 exec --no-startup-id maim --format=png --select | xclip -selection 
 
 # kill window on middle click
 bindsym --release --border button2 kill
+
+# power options
+set $Locker i3lock && sleep 1
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+u mode "$mode_system"
