@@ -181,6 +181,17 @@ return {
 			}
 			vim.lsp.enable("pyright")
 
+			vim.lsp.config.ruff = {
+				cmd = { "ruff", "server" },
+				filetypes = { "python" },
+				on_attach = on_attach,
+				flags = {
+					debounce_text_changes = 300,
+				},
+				capabilities = capabilities,
+			}
+			vim.lsp.enable("ruff")
+
 			-- Bazel language server
 			vim.lsp.config.starpls = {
 				cmd = { "starpls", "server", "--experimental_enable_label_completions" },
