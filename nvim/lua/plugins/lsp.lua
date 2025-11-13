@@ -93,143 +93,18 @@ return {
 				-- Add support for LSP Status
 				lsp_status.on_attach(client)
 			end
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			vim.lsp.config.clangd = {
-				cmd = {
-					"clangd",
-					"--background-index",
-					"--clang-tidy",
-					"-j=16",
-					"--malloc-trim",
-					"--pch-storage=memory",
-				},
-				init_options = {
-					InlayHints = {
-						Designators = true,
-						Enabled = true,
-						ParameterNames = true,
-						DeducedTypes = true,
-					},
-					fallbackFlags = { "-std=c++20" },
-				},
-				on_attach = on_attach,
-				flags = {
-					debounce_text_changes = 300,
-				},
-				capabilities = capabilities,
-			}
 			vim.lsp.enable("clangd")
-
-			-- YAML lanaguage server
-			vim.lsp.config.yamlls = {
-				settings = {
-					yaml = {
-						schemaStore = {
-							url = "https://www.schemastore.org/api/json/catalog.json",
-							enable = true,
-						},
-					},
-				},
-				on_attach = on_attach,
-				flags = {
-					debounce_text_changes = 300,
-				},
-				capabilities = capabilities,
-			}
 			vim.lsp.enable("yamlls")
-
-			-- Lua language server
-			vim.lsp.config.lua_ls = {
-				on_attach = on_attach,
-				flags = {
-					debounce_text_changes = 300,
-				},
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						runtime = {
-							version = "LuaJIT",
-						},
-						diagnostics = {
-							globals = { "vim", "hs" },
-						},
-						workspace = {
-							library = {
-								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-								[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-								["/Applications/Hammerspoon.app/Contents/Resources/extensions/hs/"] = true,
-							},
-						},
-						telemetry = { enable = false },
-					},
-				},
-			}
 			vim.lsp.enable("lua_ls")
-
-			-- Python language server
-			vim.lsp.config.pyright = {
-				single_file_support = false,
-				root_dir = function(fname)
-					return util.root_pattern("requirements.txt", "setup.py", ".git")(fname) or util.path.dirname(fname)
-				end,
-				on_attach = on_attach,
-				flags = {
-					debounce_text_changes = 300,
-				},
-				capabilities = capabilities,
-			}
 			vim.lsp.enable("pyright")
-
-			vim.lsp.config.ruff = {
-				cmd = { "ruff", "server" },
-				filetypes = { "python" },
-				on_attach = on_attach,
-				flags = {
-					debounce_text_changes = 300,
-				},
-				capabilities = capabilities,
-			}
 			vim.lsp.enable("ruff")
-
-			-- Bazel language server
-			vim.lsp.config.starpls = {
-				cmd = { "starpls", "server", "--experimental_enable_label_completions" },
-				on_attach = on_attach,
-				flags = {
-					debounce_text_changes = 300,
-				},
-				capabilities = capabilities,
-			}
 			vim.lsp.enable("starpls")
-
-			-- Beancount language server
-			-- vim.lsp.config.beancount = {
-			--     on_attach = on_attach,
-			--     flags = {
-			--         debounce_text_changes = 300,
-			--     },
-			--     capabilities = capabilities,
-			--     -- init_options = {
-			--     --     -- current path of buffer
-			--     --     journal_file = "~/cameron.beancount",
-			--     -- }
-			-- }
 			vim.lsp.enable("beancount")
-
-			-- Use a loop to conveniently call 'setup' on multiple servers and
-			-- map buffer local keybindings when the language server attaches
-			-- local standard_servers = { "ts_ls", "jsonls", "ltex", "bashls" }
-
-			-- for _, lsp in ipairs(standard_servers) do
-			-- 	nvim_lsp[lsp].setup({
-			-- 		on_attach = on_attach,
-			-- 		flags = {
-			-- 			debounce_text_changes = 300,
-			-- 		},
-			-- 		capabilities = capabilities,
-			-- 	})
-			-- end
+			vim.lsp.enable("ts_ls")
+			vim.lsp.enable("jsonls")
+			vim.lsp.enable("ltex")
+			vim.lsp.enable("bashls")
 		end,
 	},
 	{
