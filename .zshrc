@@ -12,7 +12,7 @@ fi
 
 # oh-my-zsh setup
 export plugins=(git z zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting)
-export ZSH="/Users/$USER/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 export CASE_SENSITIVE="false"
 export HYPHEN_INSENSITIVE="true"
 # the following three lines are set to true to improve shell startup performance
@@ -43,7 +43,6 @@ function zvm_config() {
 source "$ZSH/oh-my-zsh.sh"
 
 export ZSH_THEME="powerlevel10k/powerlevel10k"
-source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -93,8 +92,10 @@ PATH="$GOPATH/bin:$PATH"
 export FLYCTL_INSTALL="/Users/cameronbrown/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
-JAVA_HOME=$(/usr/libexec/java_home)
-export PATH=$JAVA_HOME/jre/bin:$PATH
+if [ -f /usr/libexec/java_home ]; then
+    JAVA_HOME=$(/usr/libexec/java_home)
+    export PATH=$JAVA_HOME/jre/bin:$PATH
+fi
 export PATH=/opt/homebrew/Cellar/qt@5/5.15.7/bin:$PATH
 export PATH="/opt/homebrew/opt/poppler-qt5/bin:$PATH"
 
