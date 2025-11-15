@@ -71,6 +71,11 @@ export SAVEHIST=1000000
 source <(fzf --zsh)
 export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort --no-preview"
 
+# source other zsh files
+for FILE in ~/dotfiles-private/*;do
+    source $FILE
+done
+
 ###############################################################################
 
 ###############################################################################
