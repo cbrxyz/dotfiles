@@ -1,19 +1,17 @@
 return {
 	cmd = {
 		"clangd",
+		"-j=" .. 16,
 		"--background-index",
 		"--clang-tidy",
-		"-j=16",
+		"--completion-style=detailed",
+		"--inlay-hints",
 		"--malloc-trim",
 		"--pch-storage=memory",
+		"--log=verbose",
 	},
+	filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 	init_options = {
-		InlayHints = {
-			Designators = true,
-			Enabled = true,
-			ParameterNames = true,
-			DeducedTypes = true,
-		},
 		fallbackFlags = { "-std=c++20" },
 	},
 }

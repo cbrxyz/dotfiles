@@ -81,7 +81,9 @@ return {
 				end,
 			})
 
-			vim.lsp.enable("clangd")
+			-- this is named cameron_clangd to avoid conflicts with the existing
+			-- clangd definition, which is taking precedence, something to fix later!
+			vim.lsp.enable("cameron_clangd")
 			vim.lsp.enable("yamlls")
 			vim.lsp.enable("lua_ls")
 			vim.lsp.enable("pyright")
