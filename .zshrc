@@ -51,7 +51,30 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# tab opens completion menu
 zstyle ':completion:*' menu select
+
+# colorize cmp menu
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# zsh options
+setopt autocd                   # change to directory by typing name
+setopt append_history           # append history instead of overwriting
+setopt share_history            # share history between sessions
+setopt hist_ignore_dups         # ignore duplicate entries in history
+setopt extended_history         # save timestamp of each command in history
+setopt correct_all              # autocorrect commands
+setopt no_beep                  # disable beep on errors
+setopt interactive_comments     # allow comments in interactive shell
+
+# make history longer
+export HISTSIZE=1000000
+export SAVEHIST=1000000
+
+# fzf history
+source <(fzf --zsh)
+export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort --no-preview"
+
 ###############################################################################
 
 ###############################################################################
@@ -105,6 +128,7 @@ fi
 # Utility variables
 ###############################################################################
 export EDITOR="nvim"
+export BROWSER="firefox"
 export GREP_OPTIONS='--color=always'
 export FZF_DEFAULT_COMMAND="rg --files -g '!*.o'"
 
@@ -293,6 +317,10 @@ upload-key() {
 
 add-shadow() {
     convert "$1" -trim \( +clone -background grey25 -shadow 80x40+5+30 \) +swap -background transparent -layers merge +repage "$1-shadow.png"
+}
+
+v() {
+    nvim $(fzf)
 }
 
 # Accepts one history line number as argument.
