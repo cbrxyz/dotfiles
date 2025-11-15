@@ -10,22 +10,27 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Local computer configuration
+source ~/.config/local-comp.zsh
+
 # oh-my-zsh setup
-export plugins=(git z zsh-vi-mode brew zsh-autosuggestions zsh-syntax-highlighting)
+export plugins=(git z zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting)
 export ZSH="/Users/$COMP_USER/.oh-my-zsh"
 export CASE_SENSITIVE="false"
 export HYPHEN_INSENSITIVE="true"
-export DISABLE_AUTO_UPDATE="false"
+# the following three lines are set to true to improve shell startup performance
+export DISABLE_AUTO_UPDATE="true"
+export DISABLE_MAGIC_FUNCTIONS="true"
+export DISABLE_COMPFIX="true"
+
 export DISABLE_UPDATE_PROMPT="true"
 export UPDATE_ZSH_DAYS=30
-export DISABLE_MAGIC_FUNCTIONS="false"
 export DISABLE_LS_COLORS="false"
 export DISABLE_AUTO_TITLE="false"
 export ENABLE_CORRECTION="true"
 # Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
 # See https://github.com/ohmyzsh/ohmyzsh/issues/5765
-export COMPLETION_WAITING_DOTS="true"
-# Uncomment the following line if you want to disable marking untracked files
+export COMPLETION_WAITING_DOTS="true" # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
 export DISABLE_UNTRACKED_FILES_DIRTY="true"
@@ -33,18 +38,15 @@ export DISABLE_UNTRACKED_FILES_DIRTY="true"
 # stamp shown in the history command output.
 export HIST_STAMPS="mm/dd/yyyy"
 
-# Local computer configuration
-source ~/.config/local-comp.zsh
-
 # zsh-vi-mode setup
 function zvm_config() {
 	export ZVM_VI_ESCAPE_BINDKEY=jk
 }
 
+source "$ZSH/oh-my-zsh.sh"
+
 export ZSH_THEME="powerlevel10k/powerlevel10k"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
-
-source "$ZSH/oh-my-zsh.sh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -375,10 +377,14 @@ source ~/.zsh/rosbash
 # Completions
 if type brew &>/dev/null; then
     FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-    autoload -Uz compinit
-    compinit
 fi
+
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+	compinit;
+else
+	compinit -C;
+fi;
 
 if command -v ngrok &>/dev/null; then
   eval "$(ngrok completion)"
