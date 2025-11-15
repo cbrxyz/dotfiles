@@ -10,12 +10,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Local computer configuration
-source ~/.config/local-comp.zsh
-
 # oh-my-zsh setup
 export plugins=(git z zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting)
-export ZSH="/Users/$COMP_USER/.oh-my-zsh"
+export ZSH="/Users/$USER/.oh-my-zsh"
 export CASE_SENSITIVE="false"
 export HYPHEN_INSENSITIVE="true"
 # the following three lines are set to true to improve shell startup performance
@@ -109,7 +106,9 @@ export PATH=$PATH:/Users/cameronbrown/.spicetify
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql/bin:$PATH"
 
-eval "$(luarocks path)"
+if type luarocks &>/dev/null; then
+    eval "$(luarocks path)"
+fi
 # add current dirs
 export LUA_PATH="${LUA_PATH};./?.lua;./?/init.lua"
 ###############################################################################
@@ -118,9 +117,11 @@ export LUA_PATH="${LUA_PATH};./?.lua;./?/init.lua"
 # Utility source files
 ###############################################################################
 # This enables the Homebrew command not found
-HB_CNF_HANDLER="$(brew --repository)/Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
-if [ -f "$HB_CNF_HANDLER" ]; then
-source "$HB_CNF_HANDLER";
+if type brew &>/dev/null; then
+    HB_CNF_HANDLER="$(brew --repository)/Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
+    if [ -f "$HB_CNF_HANDLER" ]; then
+        source "$HB_CNF_HANDLER";
+    fi
 fi
 ###############################################################################
 
@@ -174,7 +175,7 @@ alias jazz="mpv --no-video --no-resume-playback https://www.youtube.com/watch\?v
 alias h3vids="youtube-dl --get-filename -o '%(upload_date)s, %(title)s, https://www.youtube.com/watch?v=%(id)s' 'https://www.youtube.com/@H3Podcast/streams'"
 
 # MOVING
-alias icloud='cd /Users/$COMP_USER/Library/Mobile\ Documents/com~apple~CloudDocs'
+alias icloud='cd /Users/$USER/Library/Mobile\ Documents/com~apple~CloudDocs'
 
 # POWER
 alias dsn='pmset displaysleepnow'
@@ -400,7 +401,9 @@ gpp() {
     fi
 }
 ###############################################################################
-source ~/.zsh/rosbash
+if [ -f ~/.zsh/rosbash ]; then
+    source ~/.zsh/rosbash
+fi
 
 # Completions
 if type brew &>/dev/null; then
