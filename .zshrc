@@ -1,48 +1,50 @@
+#! /bin/zsh
 ###############################################################################
 # oh-my-zsh setup
 ###############################################################################
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
+# shellcheck disable=SC2296 # zsh-specific ${(b)...} expansion
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # oh-my-zsh setup
-plugins=(git z vi-mode brew zsh-autosuggestions zsh-syntax-highlighting)
+export plugins=(git z zsh-vi-mode brew zsh-autosuggestions zsh-syntax-highlighting)
 export ZSH="/Users/$COMP_USER/.oh-my-zsh"
-CASE_SENSITIVE="false"
-HYPHEN_INSENSITIVE="true"
-DISABLE_AUTO_UPDATE="false"
-DISABLE_UPDATE_PROMPT="true"
+export CASE_SENSITIVE="false"
+export HYPHEN_INSENSITIVE="true"
+export DISABLE_AUTO_UPDATE="false"
+export DISABLE_UPDATE_PROMPT="true"
 export UPDATE_ZSH_DAYS=30
-DISABLE_MAGIC_FUNCTIONS="false"
-DISABLE_LS_COLORS="false"
-DISABLE_AUTO_TITLE="false"
-ENABLE_CORRECTION="true"
+export DISABLE_MAGIC_FUNCTIONS="false"
+export DISABLE_LS_COLORS="false"
+export DISABLE_AUTO_TITLE="false"
+export ENABLE_CORRECTION="true"
 # Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
 # See https://github.com/ohmyzsh/ohmyzsh/issues/5765
-COMPLETION_WAITING_DOTS="true"
+export COMPLETION_WAITING_DOTS="true"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
+export DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-HIST_STAMPS="mm/dd/yyyy"
+export HIST_STAMPS="mm/dd/yyyy"
 
 # Local computer configuration
 source ~/.config/local-comp.zsh
 
 # zsh-vi-mode setup
 function zvm_config() {
-	ZVM_VI_ESCAPE_BINDKEY=jk
+	export ZVM_VI_ESCAPE_BINDKEY=jk
 }
 
-source $ZSH/oh-my-zsh.sh
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
+export ZSH_THEME="powerlevel10k/powerlevel10k"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+source "$ZSH/oh-my-zsh.sh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -69,7 +71,7 @@ PATH="$GOPATH/bin:$PATH"
 export FLYCTL_INSTALL="/Users/cameronbrown/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+JAVA_HOME=$(/usr/libexec/java_home)
 export PATH=$JAVA_HOME/jre/bin:$PATH
 export PATH=/opt/homebrew/Cellar/qt@5/5.15.7/bin:$PATH
 export PATH="/opt/homebrew/opt/poppler-qt5/bin:$PATH"
@@ -82,7 +84,7 @@ export PATH=$PATH:/Users/cameronbrown/.spicetify
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql/bin:$PATH"
 
-eval $(luarocks path)
+eval "$(luarocks path)"
 # add current dirs
 export LUA_PATH="${LUA_PATH};./?.lua;./?/init.lua"
 ###############################################################################
@@ -131,7 +133,6 @@ alias tree="tree -C"
 alias recent="ls -tal | head -n 10"
 alias restart="source ~/.zshrc"
 alias yt-dlp="yt-dlp --config-location ~/.config/yt-dlp/config/always.conf"
-alias dmb="git diff $(git merge-base --fork-point $(git branch -l main master --format '%(refname:short)') HEAD)"
 alias vault="cd /Users/cameronbrown/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/vault"
 alias wvim="nvim -c ':Light'"
 alias things="taskwarrior-tui"
@@ -207,7 +208,7 @@ function color() {
 }
 
 function mdc() {
-	pandoc $1 -o temp.html
+	pandoc "$1" -o temp.html
 	cat temp.html | clipboard
 	cat temp.html | wc -l | awk '{print $1 " lines copied and ready for Canvas."}'
 	rm temp.html
@@ -216,7 +217,7 @@ function mdc() {
 n()
 {
     # Block nesting of nnn in subshells
-    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+    if [ -n "$NNNLVL" ] && [ "${NNNLVL:-0}" -ge 1 ]; then
         echo "nnn is already running"
         return
     fi
@@ -247,6 +248,10 @@ s() {
     nvim /Users/cameronbrown/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/vault/dailies/"$(date +'%Y-%m-%d')".md
 }
 
+dmb() {
+    git diff "$(git merge-base --fork-point "$(git branch -l main master --format '%(refname:short)')" HEAD)"
+}
+
 # clean spotlight config (macos)
 clean_spotlight() {
     sudo mdutil -a -i off
@@ -268,19 +273,20 @@ prettycp() {
 }
 
 valgrind() {
-    docker run -ti -v $PWD:/workdir memory-test:0.1 bash -c "cd /workdir && g++ --std=c++20 -g "$@" && valgrind --error-exitcode=1 --leak-check=full ./a.out"
+    docker run -ti -v "$PWD":/workdir memory-test:0.1 \
+        bash -lc 'cd /workdir && g++ --std=c++20 -g "$@" && valgrind --error-exitcode=1 --leak-check=full ./a.out' -- "$@"
 }
 
 maples() {
-    yt-dlp --embed-metadata --download-archive ~/.config/yt-dlp/miamaples.txt $1
+    yt-dlp --embed-metadata --download-archive ~/.config/yt-dlp/miamaples.txt "$1"
 }
 
 class() {
-    yt-dlp --embed-metadata --embed-subs --download-archive ~/.config/yt-dlp/class.txt $1
+    yt-dlp --embed-metadata --embed-subs --download-archive ~/.config/yt-dlp/class.txt "$1"
 }
 
 upload-key() {
-    ssh-copy-id -i ~/.ssh/cameron-cbrxyz.pub $1
+    ssh-copy-id -i ~/.ssh/cameron-cbrxyz.pub "$1"
 }
 
 add-shadow() {
@@ -290,9 +296,9 @@ add-shadow() {
 # Accepts one history line number as argument.
 # Use `dc -1` to remove the last line.
 dc () {
-  # Prevent the specified history line from being
-  # saved.
-  local HISTORY_IGNORE="${(b)$(fc -ln $1 $1)}"
+  # Prevent the specified history line from being saved.
+  # shellcheck disable=SC2296 # zsh-specific ${(b)...} expansion
+  local HISTORY_IGNORE="${(b)$(fc -ln "$1" "$1")}"
 
   # Write out the history to file, excluding lines that
   # match `$HISTORY_IGNORE`.
@@ -300,7 +306,7 @@ dc () {
 
   # Dispose of the current history and read the new
   # history from file.
-  fc -p $HISTFILE $HISTSIZE $SAVEHIST
+  fc -p "$HISTFILE" $HISTSIZE "$SAVEHIST"
 
   # TA-DA!
   print "Deleted '$HISTORY_IGNORE' from history."
@@ -327,7 +333,7 @@ bolt() {
     nvim "$(mktemp /tmp/demo-XXXXXXXXXXXXXXXXX.cpp)"
 }
 cppw() {
-	g++ *.cpp --std=c++11
+	g++ ./*.cpp --std=c++11
 	./a.out
 	rm a.out
 }
@@ -356,11 +362,11 @@ gpp() {
         return 1
     fi
     # run grr
-    grr "$@"
-    if [ $? -eq 0 ]; then
-        ./$exe_name
+    if grr "$@"; then
+        "./$exe_name"
     else
-        echo "Compilation failed."
+        echo "compilation failed."
+        return 1
     fi
 }
 ###############################################################################

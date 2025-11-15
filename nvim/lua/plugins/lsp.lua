@@ -93,7 +93,7 @@ return {
 			vim.lsp.enable("ts_ls")
 			vim.lsp.enable("jsonls")
 			vim.lsp.enable("ltex")
-			vim.lsp.enable("bashls")
+			vim.lsp.enable("cameron_bashls")
 		end,
 	},
 	{
