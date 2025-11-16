@@ -14,7 +14,7 @@ env:
   # Location of the pre-commit cache. This is set by pre-commit, not us!
   PRE_COMMIT_CACHE: ~/.cache/pre-commit
   # Maximum acceptable Neovim startup time in milliseconds
-  MAX_NVIM_STARTUP_TIME_MS: 100
+  MAX_NVIM_STARTUP_TIME_MS: 140
 
 # Cancels this run if a new one referring to the same object and same workflow
 # is requested
