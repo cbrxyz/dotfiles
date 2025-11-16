@@ -60,7 +60,6 @@ setopt append_history           # append history instead of overwriting
 setopt share_history            # share history between sessions
 setopt hist_ignore_dups         # ignore duplicate entries in history
 setopt extended_history         # save timestamp of each command in history
-setopt correct_all              # autocorrect commands
 setopt no_beep                  # disable beep on errors
 setopt interactive_comments     # allow comments in interactive shell
 
@@ -333,6 +332,11 @@ add-shadow() {
 
 v() {
     nvim $(fzf)
+}
+
+installdeb() {
+    wget -P ~/Downloads/ "$1"
+    sudo dpkg -i ~/Downloads/"${1##*/}"
 }
 
 # Accepts one history line number as argument.
