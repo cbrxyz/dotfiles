@@ -67,15 +67,10 @@ setopt interactive_comments     # allow comments in interactive shell
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 
-# fzf history
-source <(fzf --zsh)
-export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort --no-preview"
-
 # source other zsh files
 for FILE in ~/dotfiles-private/*;do
     source $FILE
 done
-
 ###############################################################################
 
 ###############################################################################
@@ -143,8 +138,7 @@ export FZF_DEFAULT_COMMAND="rg --files -g '!*.o'"
 export SSH="cameron@10.211.55.6"
 export SCP="scp://$SSH"
 
-export PYTHONPATH="/Users/cameronbrown/Library/Mobile Documents/com~apple~CloudDocs/Coding/beeminder.py:$PYTHONPATH"
-export PYTHONPATH="/Users/cameronbrown/cop-gradescope-api:$PYTHONPATH"
+export PYTHONPATH="$HOME/cop-gradescope-api:$PYTHONPATH"
 
 export LDFLAGS="-L/opt/homebrew/opt/poppler-qt5/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/poppler-qt5/include"
@@ -422,6 +416,10 @@ if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
 else
 	compinit -C;
 fi;
+
+# fzf history
+source <(fzf --zsh)
+export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort --no-preview"
 
 if command -v ngrok &>/dev/null; then
   eval "$(ngrok completion)"
