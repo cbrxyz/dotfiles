@@ -4,6 +4,15 @@ repos:
     hooks:
       - id: stylua-github
         args: ["--syntax", "Lua54"]
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.11.0
+    hooks:
+    -   id: shellcheck
+        # SC1090: Can't follow non-constant source. Use a directive to specify location.
+        # SC1091: Not following: file not found.
+        # SC1071: ShellCheck only supports sh/bash/dash/ksh scripts. Sorry!
+        args: ["--exclude=SC1090,SC1091,SC1071"]
+        files: '.zshrc'
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
