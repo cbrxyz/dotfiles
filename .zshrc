@@ -38,6 +38,7 @@ export HIST_STAMPS="mm/dd/yyyy"
 # zsh-vi-mode setup
 function zvm_config() {
 	export ZVM_VI_ESCAPE_BINDKEY=jk
+    zvm_after_init_commands+=('source <(fzf --zsh)')
 }
 
 source "$ZSH/oh-my-zsh.sh"
@@ -151,7 +152,6 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/poppler-qt5/share/pkgconfig"
 ###############################################################################
 # COMMANDS
 alias head="ghead" # GNU head supports negative numbers
-alias lsd="lsd -al"
 alias pinentry='pinentry-mac'
 alias p='python3'
 alias python="python3"
@@ -163,6 +163,17 @@ alias yt-dlp="yt-dlp --config-location ~/.config/yt-dlp/config/always.conf"
 alias vault="cd /Users/cameronbrown/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/vault"
 alias wvim="nvim -c ':Light'"
 alias things="taskwarrior-tui"
+
+if type lsd &>/dev/null; then
+    alias ls="lsd -al"
+else
+    alias ls="ls -alG"
+fi
+if type bat &>/dev/null; then
+    alias cat="bat"
+fi
+
+alias lsd="lsd -al"
 
 # INTERNET
 alias gnv="curl -s -N v2d.wttr.in/Gainesville  | ghead -n -2"
