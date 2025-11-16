@@ -1,17 +1,11 @@
 return {
 	{
-		"neovim/nvim-lspconfig",
+		"hrsh7th/cmp-nvim-lsp",
 		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/nvim-cmp",
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
-			"j-hui/fidget.nvim",
 		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -83,7 +77,7 @@ return {
 
 			-- this is named cameron_clangd to avoid conflicts with the existing
 			-- clangd definition, which is taking precedence, something to fix later!
-			vim.lsp.enable("cameron_clangd")
+			vim.lsp.enable("clangd")
 			vim.lsp.enable("yamlls")
 			vim.lsp.enable("lua_ls")
 			vim.lsp.enable("pyright")
@@ -95,9 +89,6 @@ return {
 			vim.lsp.enable("ltex")
 			vim.lsp.enable("bashls")
 		end,
-	},
-	{
-		"m-pilia/vim-ccls",
 	},
 	{
 		"folke/lsp-colors.nvim",
