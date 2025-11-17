@@ -1,0 +1,7 @@
+name: base
+matches:
+- trigger: ":mlk"
+  replace: "[$|$]({{clipboard}})"
+  vars:
+  - name: "clipboard"
+    type: "clipboard"
