@@ -1,11 +1,28 @@
 font-family = "MesloLGS Nerd Font Mono"
 font-size = 15
+font-feature=-liga
 
 # set "blue" to "foam" (it's usually "pine")
 theme=Rose Pine Moon
 
 # palette colors reference: https://www.ditig.com/256-colors-cheat-sheet
-palette = 2=#8ed8a7                 # green
-palette = 4=#a6cdd6                 # navy
-palette = 10=#8ed8a7                # lime
-palette = 12=#a6cdd6                # blue
+# 2: green
+palette = 2=#8ed8a7
+# 4: navy
+palette = 4=#a6cdd6
+# 10: lime
+palette = 10=#8ed8a7
+# 12: blue
+palette = 12=#a6cdd6
+
+# 95% opaque
+background-opacity = 0.95
+# frosted glass effect
+background-blur = 10
+
+# ~100mb per terminal
+scrollback-limit = 100000000
+
+# shell integration
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
