@@ -24,7 +24,7 @@ export DISABLE_UPDATE_PROMPT="true"
 export UPDATE_ZSH_DAYS=30
 export DISABLE_LS_COLORS="false"
 export DISABLE_AUTO_TITLE="false"
-export ENABLE_CORRECTION="true"
+export ENABLE_CORRECTION="false"
 # Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
 # See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 export COMPLETION_WAITING_DOTS="true" # Uncomment the following line if you want to disable marking untracked files

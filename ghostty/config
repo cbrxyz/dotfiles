@@ -1,4 +1,11 @@
 font-family = "MesloLGS Nerd Font Mono"
 font-size = 15
 
+# set "blue" to "foam" (it's usually "pine")
 theme=Rose Pine Moon
+
+# palette colors reference: https://www.ditig.com/256-colors-cheat-sheet
+palette = 2=#8ed8a7                 # green
+palette = 4=#a6cdd6                 # navy
+palette = 10=#8ed8a7                # lime
+palette = 12=#a6cdd6                # blue
