@@ -35,6 +35,9 @@ export DISABLE_UNTRACKED_FILES_DIRTY="true"
 # stamp shown in the history command output.
 export HIST_STAMPS="mm/dd/yyyy"
 
+# homebrew: disable auto update
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 # zsh-vi-mode setup
 function zvm_config() {
 	export ZVM_VI_ESCAPE_BINDKEY=jk
@@ -112,6 +115,9 @@ if type luarocks &>/dev/null; then
 fi
 # add current dirs
 export LUA_PATH="${LUA_PATH};./?.lua;./?/init.lua"
+
+# aerospace cli cannot be found
+export PATH="${PATH}:AeroSpace-v0.20.0-Beta/bin/"
 ###############################################################################
 
 ###############################################################################
