@@ -336,8 +336,35 @@ add-shadow() {
     convert "$1" -trim \( +clone -background grey25 -shadow 80x40+5+30 \) +swap -background transparent -layers merge +repage "$1-shadow.png"
 }
 
+cw() {
+    MESSAGE="${1:-work}"
+    git add -u && git commit -m "$MESSAGE" && git push
+}
+
 v() {
-    nvim $(fzf)
+    FILE=$(fzf)
+    print -s "nvim $FILE"
+    nvim "$FILE"
+}
+
+# print bytes in human readable format
+bytes() {
+    BYTE_COUNT="$1"
+    if [ -z "$BYTE_COUNT" ]; then
+        echo "Usage: bytes <number_of_bytes>"
+        return 1
+    fi
+    if [ "$BYTE_COUNT" -lt 1024 ]; then
+        echo "${BYTE_COUNT} B"
+    elif [ "$BYTE_COUNT" -lt $((1024**2)) ]; then
+        echo "$((BYTE_COUNT / 1024)) KB"
+    elif [ "$BYTE_COUNT" -lt $((1024**3)) ]; then
+        echo "$((BYTE_COUNT / 1024**2)) MB"
+    elif [ "$BYTE_COUNT" -lt $((1024**4)) ]; then
+        echo "$((BYTE_COUNT / 1024**3)) GB"
+    else
+        echo "$((BYTE_COUNT / 1024**4)) TB"
+    fi
 }
 
 installdeb() {
