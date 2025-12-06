@@ -27,19 +27,20 @@ local volume_icon = sbar.add("item", {
 		string = icons.volume._100,
 		width = 25,
 		align = "left",
-		color = colors.grey,
+		color = colors.with_alpha(colors.bg2, 0.8),
 		font = {
 			style = "Regular",
 			size = 14.0,
 		},
 	},
 	label = {
-		width = 25,
+		width = 28,
 		align = "left",
 		font = {
 			style = "Regular",
 			size = 14.0,
 		},
+		color = colors.with_alpha(colors.bg2, 0.8),
 	},
 })
 
@@ -60,7 +61,7 @@ volume_slider:subscribe("volume_change", function(env)
 		icon = icons.volume._10
 	end
 
-	volume_icon:set({ label = volume })
+	volume_icon:set({ label = volume, icon = { string = icon } })
 	volume_slider:set({ slider = { percentage = volume } })
 end)
 

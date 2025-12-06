@@ -73,31 +73,31 @@ sbar.add("item", {
 })
 
 local interrupt = 0
-local function animate_detail(detail)
-	if not detail then
+local function animate_expand(expanded)
+	if not expanded then
 		interrupt = interrupt - 1
 	end
-	if interrupt > 0 and not detail then
+	if interrupt > 0 and not expanded then
 		return
 	end
 
-	sbar.animate("tanh", 30, function()
-		media_artist:set({ label = { width = detail and "dynamic" or 0 } })
-		media_title:set({ label = { width = detail and "dynamic" or 0 } })
+	sbar.animate("sin", 30, function()
+		media_artist:set({ label = { width = expanded and "dynamic" or 0 } })
+		media_title:set({ label = { width = expanded and "dynamic" or 0 } })
 	end)
 end
 
 media_cover:subscribe("media_change", function(env)
 	if whitelist[env.INFO.app] then
-		local drawing = (env.INFO.state == "playing")
-		media_artist:set({ drawing = drawing, label = env.INFO.artist })
-		media_title:set({ drawing = drawing, label = env.INFO.title })
-		media_cover:set({ drawing = drawing })
+		local currently_playing = (env.INFO.state == "playing")
+		media_artist:set({ drawing = currently_playing, label = env.INFO.artist })
+		media_title:set({ drawing = currently_playing, label = env.INFO.title })
+		media_cover:set({ drawing = currently_playing })
 
-		if drawing then
-			animate_detail(true)
+		if currently_playing then
+			animate_expand(true)
 			interrupt = interrupt + 1
-			sbar.delay(5, animate_detail)
+			sbar.delay(5, animate_expand)
 		else
 			media_cover:set({ popup = { drawing = false } })
 		end
@@ -106,11 +106,11 @@ end)
 
 media_cover:subscribe("mouse.entered", function(env)
 	interrupt = interrupt + 1
-	animate_detail(true)
+	animate_expand(true)
 end)
 
 media_cover:subscribe("mouse.exited", function(env)
-	animate_detail(false)
+	animate_expand(false)
 end)
 
 media_cover:subscribe("mouse.clicked", function(env)
