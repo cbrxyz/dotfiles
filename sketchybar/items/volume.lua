@@ -42,6 +42,8 @@ local volume_icon = sbar.add("item", {
 		},
 		color = colors.with_alpha(colors.bg2, 0.8),
 	},
+	padding_right = -10,
+	padding_left = -2,
 })
 
 volume_slider:subscribe("mouse.clicked", function(env)
