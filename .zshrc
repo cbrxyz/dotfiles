@@ -11,7 +11,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # oh-my-zsh setup
-export plugins=(git z zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting)
+export plugins=(git z zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting copybuffer)
 export ZSH="$HOME/.oh-my-zsh"
 export CASE_SENSITIVE="false"
 export HYPHEN_INSENSITIVE="true"
