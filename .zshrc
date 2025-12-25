@@ -57,14 +57,31 @@ zstyle ':completion:*' menu select
 # colorize cmp menu
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# zsh options
+############## zsh options
+# changing directories
 setopt autocd                   # change to directory by typing name
+
+# completion
+setopt always_to_end            # move cursor to the end of a completed word
+setopt auto_list                # automatically list choices on ambiguous completion
+setopt auto_menu                # show completion menu on a successive tab press
+setopt complete_in_word         # complete from both ends of a word
+setopt menu_complete            # autoselect the first completion entry
+
+# history
 setopt append_history           # append history instead of overwriting
 setopt share_history            # share history between sessions
+setopt inc_append_history       # write to the history file immediately, not when the shell exits
 setopt hist_ignore_dups         # ignore duplicate entries in history
+setopt hist_no_store            # don't store history commands
+setopt hist_verify              # don't execute immediately upon history expansion
 setopt extended_history         # save timestamp of each command in history
 setopt no_beep                  # disable beep on errors
+
+# input/output
 setopt interactive_comments     # allow comments in interactive shell
+setopt rc_quotes                # allow 'Henry''s Garage' instead of 'Henry'\''s Garage'
+###############
 
 # make history longer
 export HISTSIZE=1000000
