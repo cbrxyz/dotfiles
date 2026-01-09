@@ -72,22 +72,22 @@ return {
 					vim.diagnostic.config({
 						virtual_text = true,
 					})
+
+					-- Enable LSP servers
+					vim.lsp.enable("nil_ls")
+					vim.lsp.enable("clangd")
+					vim.lsp.enable("yamlls")
+					vim.lsp.enable("lua_ls")
+					vim.lsp.enable("pyright")
+					vim.lsp.enable("ruff")
+					vim.lsp.enable("starpls")
+					vim.lsp.enable("beancount")
+					vim.lsp.enable("ts_ls")
+					vim.lsp.enable("jsonls")
+					vim.lsp.enable("ltex")
+					vim.lsp.enable("bashls")
 				end,
 			})
-
-			-- this is named cameron_clangd to avoid conflicts with the existing
-			-- clangd definition, which is taking precedence, something to fix later!
-			vim.lsp.enable("clangd")
-			vim.lsp.enable("yamlls")
-			vim.lsp.enable("lua_ls")
-			vim.lsp.enable("pyright")
-			vim.lsp.enable("ruff")
-			vim.lsp.enable("starpls")
-			vim.lsp.enable("beancount")
-			vim.lsp.enable("ts_ls")
-			vim.lsp.enable("jsonls")
-			vim.lsp.enable("ltex")
-			vim.lsp.enable("bashls")
 		end,
 	},
 	{
