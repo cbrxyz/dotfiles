@@ -232,3 +232,12 @@ alt-shift-l = ['join-with right', 'mode main']
 if.app-id = 'org.mozilla.firefox'
 if.window-title-regex-substring = 'Picture-in-Picture'
 run = ['layout floating']
+
+# Ghostty uses native MacOS tab solutions, which causes Aerospace to typically
+# recognize multiple Ghostty tabs as individual windows. This starts Ghostty as
+# a floating window; use opt + shift + ; then f to make it tiling again!
+[[on-window-detected]]
+if.app-id="com.mitchellh.ghostty"
+run= [
+  "layout floating",
+]
