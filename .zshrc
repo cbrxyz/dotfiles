@@ -1,4 +1,4 @@
-#! /bin/zsh
+#!/bin/zsh
 ###############################################################################
 # oh-my-zsh setup
 ###############################################################################
@@ -126,6 +126,7 @@ export PATH=$PATH:/Users/cameronbrown/.spicetify
 
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c@78/bin:$PATH"
 
 if type luarocks &>/dev/null; then
     eval "$(luarocks path)"
@@ -173,7 +174,6 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/poppler-qt5/share/pkgconfig"
 # Utility aliases
 ###############################################################################
 # COMMANDS
-alias head="ghead" # GNU head supports negative numbers
 alias pinentry='pinentry-mac'
 alias p='python3'
 alias python="python3"
@@ -200,7 +200,7 @@ alias lsd="lsd -al"
 # INTERNET
 alias gnv="curl -s -N v2d.wttr.in/Gainesville  | ghead -n -2"
 alias boc="curl -s -N 'v2d.wttr.in/Boca+Raton' | ghead -n -2"
-alias pit="curl -s -N 'v2d.wttr.in/Pittsburgh' | ghead -n -2"
+alias pit="curl -s -N 'v2d.wttr.in/Pittsburgh' | head -n -2"
 alias lofi="mpv --no-video --no-resume-playback https://www.youtube.com/watch\?v\=jfKfPfyJRdk"
 alias synth="mpv --no-video --no-resume-playback https://www.youtube.com/watch\?v\=4xDzrJKXOOY"
 alias classical="mpv --no-video --no-resume-playback https://www.youtube.com/watch\?v\=sGHgBP9-zXo"
@@ -489,3 +489,6 @@ export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort --no-
 if command -v ngrok &>/dev/null; then
   eval "$(ngrok completion)"
 fi
+
+# fix weird config directory home behavior on MacOS, where ~/Library is searched first
+export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
