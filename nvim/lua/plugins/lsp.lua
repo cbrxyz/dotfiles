@@ -74,18 +74,32 @@ return {
 					})
 
 					-- Enable LSP servers
-					vim.lsp.enable("nil_ls")
+					vim.lsp.enable("bashls")
+					-- vim.lsp.enable("beancount")
 					vim.lsp.enable("clangd")
-					vim.lsp.enable("yamlls")
+					vim.lsp.enable("jsonls")
+					vim.lsp.enable("ltex")
 					vim.lsp.enable("lua_ls")
+					vim.lsp.enable("nil_ls")
+					vim.lsp.enable("nixd")
 					vim.lsp.enable("pyright")
 					vim.lsp.enable("ruff")
 					vim.lsp.enable("starpls")
-					vim.lsp.enable("beancount")
+					vim.lsp.enable("terraform_ls")
 					vim.lsp.enable("ts_ls")
-					vim.lsp.enable("jsonls")
-					vim.lsp.enable("ltex")
-					vim.lsp.enable("bashls")
+					vim.lsp.enable("yamlls")
+
+					-- Disable textDocument/willSave and textDocument/willSaveWaitUntil
+					-- to prevent auto-formatting (which I'm not the biggest fan of).
+					-- This seems to only be a problem in the beancount-language-server
+					vim.lsp.config("*", {
+						capabilities = {
+							textDocument = {
+								willSave = false,
+								willSaveWaitUntil = false,
+							},
+						},
+					})
 				end,
 			})
 		end,

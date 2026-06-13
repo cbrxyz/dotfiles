@@ -10,4 +10,10 @@ return {
 	filetypes = { "beancount", "bean" },
 	root_markers = { ".git" },
 	init_options = {},
+	capabilities = {
+		textDocument = {
+			willSave = false,
+			willSaveWaitUntil = false,
+		},
+	},
 }
