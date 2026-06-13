@@ -15,8 +15,8 @@ palette = 10=#8ed8a7
 # 12: blue
 palette = 12=#a6cdd6
 
-# 95% opaque
-background-opacity = 0.95
+# 90% opaque
+background-opacity = 0.90
 # frosted glass effect
 background-blur = 10
 
@@ -26,3 +26,30 @@ scrollback-limit = 100000000
 # shell integration
 shell-integration = detect
 shell-integration-features = cursor,sudo,title
+
+# make colors pop better
+window-colorspace = display-p3
+
+# copy terminfo when using SSH to prevent TERM incompatibilities
+shell-integration-features = ssh-terminfo,ssh-env
+
+# automatically copy selection
+copy-on-select = clipboard
+
+# right click copies or pastes
+right-click-action = copy-or-paste
+
+# always quit after last window is closed (by default, this is true on Linux only)
+quit-after-last-window-closed = true
+
+# do not use a dedicated title bar on macos
+macos-titlebar-style = tabs
+
+# show link previews for osc8 links
+link-previews = true
+
+# bold is bright
+bold-color = bright
+
+# for contents that appear possibly unsafe to paste directly, ask before pasting
+clipboard-paste-protection = true
