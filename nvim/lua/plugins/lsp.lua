@@ -79,6 +79,7 @@ return {
 					vim.lsp.enable("clangd")
 					vim.lsp.enable("jsonls")
 					vim.lsp.enable("ltex")
+					vim.lsp.enable("yamlls")
 					vim.lsp.enable("lua_ls")
 					vim.lsp.enable("nil_ls")
 					vim.lsp.enable("nixd")

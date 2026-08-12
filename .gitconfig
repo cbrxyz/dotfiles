@@ -72,3 +72,6 @@
     path = ~/dotfiles/.gitconfig-macos
 [includeIf "gitdir:/home/"]
     path = ~/dotfiles/.gitconfig-linux
+[rerere]
+	enabled = true
+	autoupdate = true

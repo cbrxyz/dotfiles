@@ -20,6 +20,7 @@ return {
 				"~/resume",
 				"~/homelab",
 				"/etc/nix%-darwin",
+				"~/.netrc",
 			}
 			for _, dir in ipairs(prohibited) do
 				if cwd:find(vim.fs.normalize(dir)) then

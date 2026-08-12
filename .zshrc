@@ -86,11 +86,6 @@ setopt rc_quotes                # allow 'Henry''s Garage' instead of 'Henry'\''s
 # make history longer
 export HISTSIZE=1000000
 export SAVEHIST=1000000
-
-# source other zsh files
-for FILE in ~/dotfiles-private/*;do
-    source $FILE
-done
 ###############################################################################
 
 ###############################################################################
@@ -127,6 +122,7 @@ export PATH=$PATH:/Users/cameronbrown/.spicetify
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql/bin:$PATH"
 export PATH="/opt/homebrew/opt/icu4c@78/bin:$PATH"
+export PATH="/usr/NX/bin:$PATH"
 
 if type luarocks &>/dev/null; then
     eval "$(luarocks path)"
@@ -308,8 +304,12 @@ s() {
     nvim /Users/cameronbrown/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/vault/dailies/"$(date +'%Y-%m-%d')".md
 }
 
+mb() {
+    git merge-base --fork-point "$(git branch -l main master --format '%(refname:short)')" HEAD
+}
+
 dmb() {
-    git diff "$(git merge-base --fork-point "$(git branch -l main master --format '%(refname:short)')" HEAD)"
+    git diff "$(mb)"
 }
 
 # clean spotlight config (macos)
@@ -332,10 +332,12 @@ prettycp() {
     rsync --recursive --times --modify-window=2 --progress --verbose --itemize-changes --stats --human-readable
 }
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
 valgrind() {
     docker run -ti -v "$PWD":/workdir memory-test:0.1 \
         bash -lc 'cd /workdir && g++ --std=c++20 -g "$@" && valgrind --error-exitcode=1 --leak-check=full ./a.out' -- "$@"
 }
+fi
 
 maples() {
     yt-dlp --embed-metadata --download-archive ~/.config/yt-dlp/miamaples.txt "$1"
@@ -346,7 +348,8 @@ class() {
 }
 
 upload-key() {
-    ssh-copy-id -i ~/.ssh/cameron-cbrxyz.pub "$1"
+    KEY=${2:-~/.ssh/cameron-cbrxyz.pub}
+    ssh-copy-id -i "$KEY" "$1"
 }
 
 add-shadow() {
@@ -465,6 +468,23 @@ gpp() {
         return 1
     fi
 }
+
+unalias gco
+gco() {
+    if [ $# -ne 1 ]; then
+        git checkout $(git branch | fzf)
+    else
+        if ! git checkout "$1" 2>/dev/null; then
+            available_branches=$(git branch)
+            partial_match=$(echo "$available_branches" | grep "$1" | xargs)
+            if [ -n "$partial_match" ]; then
+                git checkout "$partial_match"
+            else
+                echo "No matching branch found for '$1'."
+            fi
+        fi
+    fi
+}
 ###############################################################################
 if [ -f ~/.zsh/rosbash ]; then
     source ~/.zsh/rosbash
@@ -492,3 +512,11 @@ fi
 
 # fix weird config directory home behavior on MacOS, where ~/Library is searched first
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+
+# EVERYTHING SHOULD GO ABOVE ^
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# source other zsh files - this should be at the end of the file to avoid conflicts
+for FILE in ~/dotfiles-private/*;do
+    source $FILE
+done
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
