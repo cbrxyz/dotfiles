@@ -35,11 +35,13 @@ return {
 		config = function()
 			-- calling `setup` is optional for customization
 			require("fzf-lua").setup({
+				hls = {
+					normal = "Pmenu",
+				},
 				winopts = {
 					height = 0.75,
 					width = 0.75,
 					row = 0.5,
-					hl = { normal = "Pmenu" },
 					border = "none",
 				},
 				fzf_opts = {
