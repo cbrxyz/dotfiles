@@ -1,33 +1,37 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
+	lazy = false,
 	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter.configs").setup({
-			-- One of "all", "maintained" (parsers with maintainers), or a list of languages
-			ensure_installed = {},
+		local treesitter = require("nvim-treesitter")
+		local ignored = { "phpdoc" }
 
-			indent = {
-				enable = true,
-			},
+		local function start(buf, lang)
+			if pcall(vim.treesitter.start, buf, lang) then
+				vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end
+		end
 
-			auto_install = true,
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function(event)
+				local lang = vim.treesitter.language.get_lang(event.match)
+				if not lang or vim.list_contains(ignored, lang) then
+					return
+				end
 
-			-- Install languages synchronously (only applied to `ensure_installed`)
-			sync_install = false,
-
-			-- List of parsers to ignore installing
-			ignore_install = { "phpdoc" },
-
-			highlight = {
-				-- `false` will disable the whole extension
-				enable = true,
-
-				-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-				-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-				-- Using this option may slow down your editor, and you may see some duplicate highlights.
-				-- Instead of true it can also be a list of languages
-				additional_vim_regex_highlighting = false,
-			},
+				local needs_install = not vim.list_contains(treesitter.get_installed(), lang)
+					and vim.list_contains(treesitter.get_available(), lang)
+				if needs_install then
+					treesitter.install(lang):await(vim.schedule_wrap(function()
+						if vim.api.nvim_buf_is_valid(event.buf) then
+							start(event.buf, lang)
+						end
+					end))
+				else
+					start(event.buf, lang)
+				end
+			end,
 		})
 	end,
 }
