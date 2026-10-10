@@ -8,7 +8,8 @@ return {
 		"--inlay-hints",
 		"--malloc-trim",
 		"--pch-storage=memory",
-		"--log=verbose",
+		-- Uncomment when verbose logging is useful:
+		-- "--log=verbose",
 	},
 	filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 	init_options = {
